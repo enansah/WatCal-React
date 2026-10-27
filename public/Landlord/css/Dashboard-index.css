@@ -1,0 +1,45 @@
+/* Landlord Dashboard. Figures, cards, chart and tips are styled in Insights.css */
+.ldash { width: 100%; padding: 30px 20px 40px; color: #fff; }
+.ldash .wrap { width: min(1197px, 100%); margin: 0 auto; display: flex; flex-direction: column; gap: 22px; text-align: left; }
+
+/* headline */
+.ldash .headline { display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 16px; }
+.ldash .eyebrow { font-size: 13px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.ldash h1 { font-size: 32px; font-weight: 500; line-height: 130%; }
+.ldash .updated { display: flex; align-items: center; gap: 10px; margin-top: 4px; font-size: 13px; color: var(--muted); }
+.ldash .updated button, .ldash .link { padding: 0; background: none; color: var(--green); font-size: 13px; text-decoration: underline; cursor: pointer; }
+.ldash .id-chip { display: flex; align-items: center; gap: 10px; padding: 10px 20px; border: 1px solid var(--green); border-radius: 50px; background: rgba(6,204,2,.08); font-size: 14px; }
+.ldash .id-chip span { color: var(--muted); }
+.ldash .id-chip b { font-size: 18px; font-weight: 500; color: var(--green); }
+
+.ldash .pay { align-self: flex-start; margin-top: 6px; padding: 8px 28px; border-radius: 20px; background: var(--green); color: #000; font-size: 15px; font-weight: 700; cursor: pointer; transition: background .3s; }
+.ldash .pay:hover { background: var(--green-hover); }
+
+/* rooms table + tips side by side */
+.ldash .split { display: grid; grid-template-columns: minmax(0, 1.85fr) minmax(0, 1fr); gap: 22px; align-items: start; }
+
+.ldash .table-wrap { overflow-x: auto; }
+.ldash .rooms { width: 100%; min-width: 540px; border-collapse: collapse; font-size: 14px; }
+.ldash .rooms th, .ldash .rooms td { padding: 11px 8px; border-bottom: 1px solid var(--line); text-align: left; white-space: nowrap; }
+.ldash .rooms .off-tag { padding: 1px 7px; border: 1px solid rgba(255,176,32,.5); border-radius: 10px; color: var(--warn); font-size: 11px; }
+.ldash .rooms thead th { font-size: 12px; font-weight: 400; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.ldash .rooms .num { text-align: right; font-variant-numeric: tabular-nums; }
+.ldash .rooms tbody tr { cursor: pointer; transition: background .2s; }
+.ldash .rooms tbody tr:hover { background: rgba(6,204,2,.06); }
+.ldash .rooms tbody th { font-weight: 500; }
+.ldash .room-link { display: inline-flex; align-items: center; gap: 8px; padding: 0; background: none; color: #fff; font-size: 14px; font-weight: 500; cursor: pointer; }
+.ldash .room-link:hover, .ldash .room-link:focus-visible { color: var(--green); }
+.ldash .share { display: inline-flex; align-items: center; gap: 8px; font-variant-numeric: tabular-nums; }
+.ldash .share-bar { width: 56px; height: 6px; overflow: hidden; border-radius: 6px; background: #2e2e2e; }
+.ldash .share-bar i { display: block; height: 100%; border-radius: 6px; background: var(--green); }
+.ldash .rooms .muted { color: var(--muted); }
+.ldash .rooms .late { color: var(--warn); }
+.ldash .rooms small { color: var(--muted); font-size: 12px; }
+
+@media (max-width: 1200px) {
+  .ldash .split { grid-template-columns: 1fr; }
+}
+@media (max-width: 800px) {
+  .ldash { padding-top: 20px; }
+  .ldash h1 { font-size: 24px; }
+}

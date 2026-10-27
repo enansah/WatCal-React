@@ -1,0 +1,61 @@
+/* Tenant "View your bill" dashboard (view only). Figures, cards, chart and tips are styled in
+   Landlord/css/Insights.css */
+.tview { width: 100%; padding: 40px 20px 60px; color: #fff; }
+.tview .wrap { width: min(1197px, 100%); margin: 0 auto; display: flex; flex-direction: column; gap: 22px; text-align: left; }
+.tview .state { display: flex; flex-direction: column; align-items: center; gap: 14px; padding: 100px 0; font-size: 17px; color: var(--muted); text-align: center; }
+
+/* headline */
+.tview .headline { display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 16px; }
+.tview .eyebrow { font-size: 13px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.tview h1 { font-size: 32px; font-weight: 500; line-height: 130%; color: var(--green); overflow-wrap: anywhere; }
+.tview .updated { display: flex; align-items: center; gap: 10px; margin-top: 4px; font-size: 13px; color: var(--muted); }
+.tview .updated button { padding: 0; background: none; color: var(--green); font-size: 13px; text-decoration: underline; cursor: pointer; }
+.tview .tools { display: flex; flex-wrap: wrap; gap: 10px; }
+.tview .outline {
+  padding: 8px 18px; border: 1px solid var(--green); border-radius: 8px; background: transparent;
+  color: var(--green); font-size: 14px; cursor: pointer; transition: background .3s, color .3s;
+}
+.tview .outline:hover { background: var(--green); color: var(--panel); }
+.tview .viewonly { padding: 12px 16px; border: 1px solid var(--line); border-left: 3px solid var(--green); border-radius: 12px; background: rgba(28,28,28,.92); font-size: 14px; line-height: 150%; color: var(--muted); }
+
+.tview .split { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 22px; align-items: start; }
+
+/* general saving tips under the personal ones */
+.tview .saving { padding-top: 6px; border-top: 1px solid var(--line); }
+.tview .saving h3 { margin: 8px 0 10px; font-size: 15px; font-weight: 500; }
+.tview .saving ul { display: flex; flex-direction: column; gap: 10px; padding: 0; list-style: none; }
+.tview .saving li { display: flex; align-items: flex-start; gap: 12px; font-size: 14px; font-weight: 300; line-height: 150%; color: var(--muted); }
+.tview .check { flex: none; width: 22px; height: 22px; display: grid; place-items: center; border-radius: 50%; background: rgba(6,204,2,.15); color: var(--green); font-size: 12px; }
+
+/* meter status + readings table */
+.tview .status { display: inline-flex; align-items: center; gap: 8px; padding: 6px 12px; border: 1px solid var(--line); border-radius: 20px; font-size: 13px; color: #d6d6d6; white-space: nowrap; }
+.tview .status.warn { color: var(--warn); border-color: rgba(255,176,32,.4); }
+.tview .table-wrap { overflow-x: auto; }
+.tview .readings { width: 100%; min-width: 360px; border-collapse: collapse; font-size: 14px; }
+.tview .readings th, .tview .readings td { padding: 10px; border-bottom: 1px solid var(--line); text-align: left; white-space: nowrap; }
+.tview .readings thead th { font-size: 12px; font-weight: 400; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.tview .readings .num { text-align: right; font-variant-numeric: tabular-nums; }
+
+@media (max-width: 900px) {
+  .tview .split { grid-template-columns: 1fr; }
+}
+@media (max-width: 700px) {
+  .tview { padding-top: 24px; }
+  .tview h1 { font-size: 24px; }
+}
+
+/* printing: hide site chrome and use a light, ink-friendly look.
+   Only applies when this page is shown (body:has(.tview)). */
+@media print {
+  body:has(.tview) .navbar,
+  body:has(.tview) .footer,
+  body:has(.tview) .electric,
+  .tview .tools, .tview .updated button, .tview .seg { display: none !important; }
+  body:has(.tview), .tview { background: #fff !important; color: #000 !important; }
+  .tview .kpi, .tview .card, .tview .viewonly, .tview .tip, .tview .chart-box, .tview .tips-empty {
+    background: #fff !important; color: #000 !important; border-color: #999 !important; break-inside: avoid;
+  }
+  .tview h1, .tview .accent { color: #046b01 !important; }
+  .tview .kpi .value, .tview .card h2, .tview .stats b, .tview .readings td { color: #000 !important; }
+  .tview .bars text { fill: #333 !important; }
+}

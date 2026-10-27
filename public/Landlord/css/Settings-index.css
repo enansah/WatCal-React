@@ -1,0 +1,58 @@
+.lsettings { width: 100%; min-height: 60vh; padding: 30px 20px 60px; color: #fff; }
+.lsettings .wrap { width: min(1197px, 100%); margin: 0 auto; display: flex; flex-direction: column; gap: 28px; text-align: left; }
+
+/* 1. headline */
+.lsettings .headline { display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 16px; }
+.lsettings .eyebrow { font-size: 13px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.lsettings h1 { font-size: 32px; font-weight: 500; line-height: 130%; }
+.lsettings .who { display: flex; align-items: center; flex-wrap: wrap; gap: 10px 12px; padding: 8px 18px 8px 8px; border: 1px solid var(--line); border-radius: 50px; background: rgba(28,28,28,.92); }
+.lsettings .who img { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; }
+.lsettings .who span { display: flex; flex-direction: column; min-width: 0; }
+.lsettings .who b { font-size: 15px; font-weight: 500; }
+.lsettings .who small { font-size: 12px; color: var(--muted); overflow-wrap: anywhere; }
+.lsettings .who em { padding: 4px 12px; border: 1px solid var(--green); border-radius: 50px; background: rgba(6,204,2,.08); font-size: 12px; font-style: normal; color: var(--green); }
+
+/* 2. groups */
+.lsettings .groups { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(290px, 100%), 1fr)); gap: 24px; align-items: start; }
+.lsettings .setting-group {
+  display: flex; flex-direction: column; align-items: center; gap: 14px;
+  padding: 28px 20px 22px; border: 1px solid var(--line); border-top: 2px solid var(--green); border-radius: 28px;
+  background: rgba(28,28,28,.92); box-shadow: 5px 5px 2px rgba(0,0,0,.3);
+}
+.lsettings .badge { padding: 12px; border-radius: 50%; background: linear-gradient(180deg, rgba(202,255,51,.05), rgba(202,255,51,0)); }
+.lsettings .badge span {
+  width: 66px; height: 66px; display: grid; place-items: center; border-radius: 50%;
+  background: linear-gradient(180deg, rgba(202,255,51,.1), rgba(202,255,51,0) 47%); border: 1px solid rgba(202,255,51,.2);
+}
+.lsettings .badge img { width: 30px; height: 30px; }
+.lsettings .setting-group h2 { font-size: 22px; font-weight: 400; letter-spacing: normal; text-transform: none; color: #fff; }
+
+.lsettings .items { width: 100%; display: flex; flex-direction: column; gap: 6px; margin-top: 6px; padding: 10px; list-style: none; border-radius: 22px; background: #1a1a1a; }
+.lsettings .item {
+  width: 100%; display: flex; align-items: center; gap: 12px; padding: 12px 14px;
+  border-radius: 14px; background: transparent; color: #fff; font-size: 16px; text-align: left; cursor: pointer;
+  transition: background .3s, color .3s;
+}
+.lsettings .item img { width: 24px; height: 24px; flex: none; }
+.lsettings .item span { flex: 1; min-width: 0; }
+.lsettings .item i { font-style: normal; font-size: 22px; line-height: 1; color: var(--muted); transition: transform .3s, color .3s; }
+.lsettings .item:not(:disabled):hover, .lsettings .item:focus-visible { background: #262626; color: var(--green-hover); outline: none; }
+.lsettings .item:not(:disabled):hover i { transform: translateX(3px); color: var(--green-hover); }
+.lsettings .item.danger:not(:disabled):hover, .lsettings .item.danger:focus-visible { color: #ff6b6b; }
+.lsettings .item.danger:not(:disabled):hover i { color: #ff6b6b; }
+.lsettings .item:disabled { cursor: default; color: #8a8a8a; }
+.lsettings .item:disabled img { opacity: .5; }
+.lsettings .soon { flex: none; padding: 3px 8px; border: 1px solid #3a3a3a; border-radius: 50px; font-size: 11px; color: var(--muted); white-space: nowrap; }
+
+@media (max-width: 700px) {
+  .lsettings { padding: 20px 16px 50px; }
+  .lsettings h1 { font-size: 26px; }
+  .lsettings .groups { grid-template-columns: 1fr; gap: 18px; }
+  .lsettings .setting-group { flex-direction: row; flex-wrap: wrap; align-items: center; gap: 12px 14px; padding: 18px 16px 16px; border-radius: 22px; }
+  .lsettings .badge { padding: 6px; }
+  .lsettings .badge span { width: 48px; height: 48px; }
+  .lsettings .badge img { width: 24px; height: 24px; }
+  .lsettings .setting-group h2 { font-size: 19px; }
+  .lsettings .items { flex-basis: 100%; margin-top: 0; padding: 6px; border-radius: 16px; }
+  .lsettings .item { font-size: 15px; padding: 11px 12px; }
+}

@@ -1,0 +1,73 @@
+/* Autofill: keep the dark input look */
+.login-page input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px #1a1a1a inset !important;
+  -webkit-text-fill-color: #bfbfbf !important;
+}
+.login-page input:-moz-autofill { box-shadow: 0 0 0 1000px #1a1a1a inset !important; -moz-text-fill-color: #bfbfbf !important; }
+
+.login-page { display: flex; flex-direction: column; align-items: center; width: 100%; padding-top: 50px; overflow: hidden; }
+.login-page .section { width: 100%; display: flex; justify-content: center; padding: 0 20px; }
+
+.login-page .card {
+  width: 1197px; max-width: 100%; display: flex; flex-direction: column; align-items: center;
+  gap: clamp(40px, 8vw, 100px); padding: 97px 20px; border-radius: 20px; border-bottom: 1px solid #000;
+  background: url(/images/Login.png) top / cover no-repeat;
+  text-align: center; color: var(--green);
+}
+.login-page .head { width: 1026px; max-width: 100%; display: flex; flex-direction: column; gap: 20px; }
+.login-page .head h1 { font-size: 38px; font-weight: 500; line-height: 150%; }
+.login-page .head .text { color: #bfbfbf; }
+
+.login-page form { width: 1026px; max-width: 100%; display: flex; flex-direction: column; gap: 30px; text-align: left; font-size: 14px; color: #bfbfbf; }
+.login-page .error { color: #ff6b6b; }
+.login-page .notice { padding: 10px 14px; border: 1px solid rgba(6,204,2,.4); border-radius: 10px; background: rgba(6,204,2,.08); color: var(--green); font-size: 14px; }
+.login-page .fields { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+.login-page .field {
+  display: flex; align-items: center; gap: 10px; padding: 14px 16px;
+  background: #1a1a1a; border: 2px solid var(--panel); border-radius: 88px; transition: border-color .3s;
+}
+.login-page .field:focus-within { border-color: var(--green); }
+.login-page .field img { width: 22px; height: 21px; flex: none; }
+.login-page .field input {
+  flex: 1; min-width: 0; padding: 0; background: transparent; color: #bfbfbf;
+  font-size: 16px; font-weight: 500; outline: none;
+}
+.login-page .field .eye { cursor: pointer; }
+.login-page .rule { height: 1px; border-top: 1px solid var(--muted); }
+
+.login-page .forgot { align-self: center; background: none; color: #fff; font-size: 18px; text-decoration: underline; cursor: pointer; }
+.login-page .actions { width: 400px; max-width: 100%; align-self: center; display: flex; flex-direction: column; gap: 24px; }
+.login-page .actions .btn { width: 100%; padding: 15px 20px; border-radius: 63px; text-align: center; color: #262626; }
+.login-page .actions .btn:disabled { opacity: .6; cursor: not-allowed; }
+.login-page .btn-alt {
+  width: 100%; padding: 13px 19px; border: 1px solid #333; border-radius: 63px;
+  background: var(--line); color: #fff; font-size: 16px; cursor: pointer; transition: .7s;
+}
+.login-page .btn-alt:hover { background: #595959; border-color: #595959; }
+
+.login-page .divider { width: 518px; max-width: 100%; align-self: center; display: flex; align-items: center; gap: 20px; font-size: 16px; color: var(--muted); }
+.login-page .divider span { flex: 1; height: 1px; background: var(--muted); }
+.login-page .google { display: flex; justify-content: center; }
+.login-page .ring { width: 94px; height: 94px; padding: 12px; border-radius: 70px; background: linear-gradient(180deg, rgba(202,255,51,.05), rgba(202,255,51,0)); }
+.login-page .badge { width: 70px; height: 70px; padding: 20px 19px; border-radius: 50px; border: 1px solid rgba(202,255,51,.2); background: linear-gradient(180deg, rgba(202,255,51,.1), rgba(202,255,51,0) 46.77%); }
+.login-page .badge img { width: 30px; height: 30px; }
+
+@media (max-width: 1000px) {
+  .login-page .head h1 { font-size: 30px; }
+  .login-page .card { padding: 63px 20px; }
+}
+@media (max-width: 750px) {
+  .login-page { padding-top: 20px; }
+  .login-page .section { padding: 0 16px; }
+  .login-page .fields { grid-template-columns: 1fr; gap: 20px; }
+  .login-page form { gap: 20px; }
+  .login-page .card { padding: 40px 16px; }
+}
+@media (max-width: 450px) {
+  .login-page .head h1 { font-size: 23px; }
+  .login-page .card { padding: 41px 14px; }
+  .login-page .forgot { font-size: 16px; }
+}
+
+/* logo ring on the "view as tenant" page */
+.login-page .lg { width: 100px; height: 100px; margin: 0 auto 10px; border: 3px solid var(--green); border-radius: 50%; object-fit: contain; }

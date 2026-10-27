@@ -1,0 +1,15 @@
+/* "Continue with Google" (public/components/GoogleButton.jsx) */
+.google-signin { width: min(320px, 100%); margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 10px; }
+.google-signin .gsi-holder { width: 100%; min-height: 44px; display: flex; justify-content: center; }
+.google-signin .gsi-holder.busy { opacity: .5; pointer-events: none; }
+
+/* Shown in the same dark pill style when Google sign-in isn't set up or can't load */
+.google-fallback {
+  width: 100%; height: 44px; display: flex; align-items: center; justify-content: center; gap: 10px;
+  border: 1px solid #3c4043; border-radius: 50px; background: #131314; color: #e3e3e3;
+  font-size: 15px; font-weight: 500; cursor: pointer; transition: background .3s, border-color .3s;
+}
+.google-fallback:hover { background: #1f1f20; border-color: #5f6368; }
+.google-fallback:focus-visible { outline: 2px solid var(--green); outline-offset: 3px; }
+.google-fallback img { width: 20px; height: 20px; }
+.google-busy { font-size: 13px; color: var(--muted); }

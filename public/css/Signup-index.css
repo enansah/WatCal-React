@@ -1,0 +1,83 @@
+.signup { display: flex; flex-direction: column; align-items: center; width: 100%; padding-top: 50px; overflow: hidden; }
+.signup .section { width: 100%; display: flex; justify-content: center; padding: 0 20px; }
+
+.signup .card {
+  width: 1197px; max-width: 100%; display: flex; flex-direction: column; align-items: center;
+  gap: clamp(30px, 6vw, 80px); padding: 98px 20px; border-radius: 20px; border-bottom: 1px solid #000;
+  background: url(/images/p.png) top / cover no-repeat; text-align: center; color: var(--green);
+}
+.signup .head { width: 1026px; max-width: 100%; display: flex; flex-direction: column; gap: 6px; }
+.signup .head h1 { font-size: 38px; font-weight: 500; line-height: 150%; }
+.signup .role { font-size: 16px; font-weight: 300; margin-bottom: 10px; }
+.signup .head .text { color: #bfbfbf; }
+
+.signup form { width: 1026px; max-width: 100%; display: flex; flex-direction: column; gap: 30px; text-align: left; font-size: 16px; color: #bfbfbf; }
+.signup .error, .signup .success { padding: 12px 16px; border-radius: 12px; font-size: 14px; }
+.signup .error { color: #ff6b6b; border: 1px solid rgba(255,107,107,.4); background: rgba(255,107,107,.08); }
+.signup .success { color: var(--green-hover); border: 1px solid var(--green); background: rgba(6,204,2,.1); }
+
+.signup .fields { display: grid; grid-template-columns: 1fr 1fr; gap: 24px 30px; }
+.signup .field { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.signup .field b { padding-left: 14px; font-weight: 700; line-height: 130%; }
+.signup .control {
+  display: flex; align-items: center; gap: 12px; padding: 15px 25px;
+  border: 1px solid #464444; border-radius: 20px; transition: border-color .3s;
+}
+.signup .control:focus-within { border-color: var(--green); }
+.signup .control input, .signup .control select {
+  flex: 1; min-width: 0; padding: 0; background: transparent; color: #bfbfbf;
+  font-size: 16px; font-weight: 500; outline: none; color-scheme: dark;
+}
+.signup .control select option { background: var(--panel); color: #bfbfbf; }
+.signup .eye, .signup .hint { width: 22px; height: 22px; flex: none; }
+.signup .eye { cursor: pointer; }
+
+.signup .rule { height: 1px; border-top: 1px solid var(--muted); }
+.signup .actions { width: 400px; max-width: 100%; align-self: center; display: flex; flex-direction: column; gap: 24px; }
+.signup .actions .btn { width: 100%; padding: 15px 20px; border-radius: 63px; text-align: center; color: #262626; }
+.signup .actions .btn:disabled { opacity: .6; cursor: not-allowed; }
+.signup .btn-alt {
+  width: 100%; padding: 13px 19px; border: 1px solid #333; border-radius: 63px;
+  background: var(--line); color: #fff; font-size: 16px; cursor: pointer; transition: .7s;
+}
+.signup .btn-alt:hover { background: #595959; border-color: #595959; }
+
+.signup .divider { width: 518px; max-width: 100%; align-self: center; display: flex; align-items: center; gap: 20px; color: var(--muted); }
+.signup .divider span { flex: 1; height: 1px; background: var(--muted); }
+.signup .google { display: flex; justify-content: center; }
+.signup .ring { width: 94px; height: 94px; padding: 12px; border-radius: 70px; background: linear-gradient(180deg, rgba(202,255,51,.05), rgba(202,255,51,0)); }
+.signup .badge { width: 70px; height: 70px; padding: 20px 19px; border-radius: 50px; border: 1px solid rgba(202,255,51,.2); background: linear-gradient(180deg, rgba(202,255,51,.1), rgba(202,255,51,0) 46.77%); }
+.signup .badge img { width: 30px; height: 30px; }
+
+@media (max-width: 1200px) { .signup .card { padding: 64px 20px; } }
+@media (max-width: 750px) {
+  .signup { padding-top: 20px; }
+  .signup .section { padding: 0 16px; }
+  .signup .fields { grid-template-columns: 1fr; gap: 18px; }
+  .signup .card { padding: 42px 16px; }
+  .signup .head h1 { font-size: 30px; }
+  .signup .control { padding: 13px 18px; }
+}
+@media (max-width: 450px) { .signup .head h1 { font-size: 23px; } }
+
+/* landlord rooms */
+.signup .rooms { display: flex; flex-direction: column; gap: 16px; }
+.signup .rooms-head { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+.signup .rooms-head h2 { font-size: 18px; font-weight: 700; color: #bfbfbf; }
+.signup .rooms-head p { font-size: 14px; font-weight: 300; }
+.signup .room-row { display: grid; grid-template-columns: 1fr 1fr auto; gap: 16px 20px; align-items: end; }
+.signup .remove { width: 44px; height: 44px; margin-bottom: 4px; border-radius: 50%; background: var(--line); color: #bfbfbf; font-size: 16px; cursor: pointer; transition: .3s; }
+.signup .remove:hover { background: #595959; }
+.signup .remove-spacer { width: 44px; }
+.signup .add-room { align-self: flex-start; padding: 9.5px 40px; border-radius: 20px; background: var(--line); color: #bfbfbf; font-size: 14px; cursor: pointer; transition: .7s; }
+.signup .add-room:hover { background: #464444; }
+@media (max-width: 750px) {
+  .signup .room-row { grid-template-columns: 1fr; }
+  .signup .remove, .signup .remove-spacer { display: none; }
+}
+/* Shown while finishing a sign-up started with "Continue with Google" */
+.signup .google-note { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 10px; padding: 12px 16px; border: 1px solid #3c4043; border-radius: 12px; background: #131314; font-size: 14px; color: #e3e3e3; }
+.signup .google-note img { width: 20px; height: 20px; flex: none; }
+.signup .google-note span { flex: 1 1 220px; }
+.signup .google-note button { padding: 0; background: none; color: var(--green); font-size: 14px; cursor: pointer; text-decoration: underline; }
+.signup input[readonly] { opacity: .75; cursor: not-allowed; }

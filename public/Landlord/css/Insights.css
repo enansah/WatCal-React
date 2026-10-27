@@ -1,0 +1,78 @@
+/* Shared pieces of the landlord Dashboard and Analysis pages, the private-user dashboard and the tenant bill view: figures, cards, bar chart, range tabs, tips */
+:is(.ldash, .lanalysis, .tdash, .tview) { --warn: #ffb020; --bad: #ff6b6b; --info: #5aa9ff; }
+
+/* key figures */
+:is(.ldash, .lanalysis, .tdash, .tview) .kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr)); gap: 18px; }
+:is(.ldash, .lanalysis, .tdash, .tview) .kpi {
+  display: flex; flex-direction: column; gap: 6px; min-width: 0; padding: 20px 22px;
+  border: 1px solid var(--line); border-top: 3px solid var(--green); border-radius: 18px; background: rgba(28,28,28,.92);
+}
+:is(.ldash, .lanalysis, .tdash, .tview) .kpi .label { font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+:is(.ldash, .lanalysis, .tdash, .tview) .kpi .value { font-size: 30px; font-weight: 600; line-height: 1.2; overflow-wrap: anywhere; }
+:is(.ldash, .lanalysis, .tdash, .tview) .kpi .note { font-size: 13px; font-weight: 300; line-height: 145%; color: var(--muted); }
+:is(.ldash, .lanalysis, .tdash, .tview) .kpi.up .value { color: var(--bad); }
+:is(.ldash, .lanalysis, .tdash, .tview) .kpi.down .value { color: var(--green); }
+:is(.ldash, .lanalysis, .tdash, .tview) .kpi.warn { border-top-color: var(--warn); }
+:is(.ldash, .lanalysis, .tdash, .tview) .kpi.warn .value { color: var(--warn); }
+
+/* cards */
+:is(.ldash, .lanalysis, .tdash, .tview) .card { display: flex; flex-direction: column; gap: 14px; min-width: 0; padding: 22px 24px; border: 1px solid var(--line); border-radius: 18px; background: rgba(28,28,28,.92); }
+:is(.ldash, .lanalysis, .tdash, .tview) .card-head { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 10px 16px; }
+:is(.ldash, .lanalysis, .tdash, .tview) .card h2 { font-size: 18px; font-weight: 500; }
+:is(.ldash, .lanalysis, .tdash, .tview) .sub { margin-top: 2px; font-size: 13px; font-weight: 300; color: var(--muted); }
+:is(.ldash, .lanalysis, .tdash, .tview) .stats { display: flex; flex-wrap: wrap; gap: 6px 22px; font-size: 13px; color: var(--muted); }
+:is(.ldash, .lanalysis, .tdash, .tview) .stats b { color: #fff; font-weight: 500; }
+
+/* range tabs */
+:is(.ldash, .lanalysis, .tdash, .tview) .seg { display: inline-flex; padding: 3px; border: 1px solid var(--line); border-radius: 12px; background: #141414; }
+:is(.ldash, .lanalysis, .tdash, .tview) .seg button { padding: 6px 12px; border-radius: 9px; background: transparent; color: var(--muted); font-size: 13px; cursor: pointer; transition: background .2s, color .2s; }
+:is(.ldash, .lanalysis, .tdash, .tview) .seg button:hover { color: #fff; }
+:is(.ldash, .lanalysis, .tdash, .tview) .seg button.on { background: var(--green); color: #000; font-weight: 600; }
+
+/* bar chart */
+:is(.ldash, .lanalysis, .tdash, .tview) .chart-box { padding: 10px 6px 8px; overflow-x: auto; border-radius: 12px; background: #141414; }
+:is(.ldash, .lanalysis, .tdash, .tview) .bars { display: block; width: 100%; height: auto; font-size: 12px; }
+:is(.ldash, .lanalysis, .tdash, .tview) .chart-box.wide .bars { min-width: 560px; }
+:is(.ldash, .lanalysis, .tdash, .tview) .bars .grid line { stroke: #2e2e2e; stroke-dasharray: 3 4; }
+:is(.ldash, .lanalysis, .tdash, .tview) .bars text { fill: #9a9a9a; }
+:is(.ldash, .lanalysis, .tdash, .tview) .bars .bar rect { fill: var(--green); transition: fill .2s; }
+:is(.ldash, .lanalysis, .tdash, .tview) .bars .bar rect.hit { fill: transparent; }
+:is(.ldash, .lanalysis, .tdash, .tview) .bars .bar:hover rect:not(.hit) { fill: var(--green-hover); }
+:is(.ldash, .lanalysis, .tdash, .tview) .bars .bar.current rect:not(.hit) { fill: rgba(6,204,2,.45); }
+:is(.ldash, .lanalysis, .tdash, .tview) .bars .bar.missing rect:not(.hit) { fill: #3a3a3a; }
+:is(.ldash, .lanalysis, .tdash, .tview) .bars .val { fill: #e6e6e6; font-size: 11px; }
+:is(.ldash, .lanalysis, .tdash, .tview) .bars .ref { fill: none; stroke: #ffffff; stroke-width: 1.5; stroke-dasharray: 5 5; opacity: .7; }
+:is(.ldash, .lanalysis, .tdash, .tview) .chart-empty { fill: var(--muted); font-size: 14px; }
+:is(.ldash, .lanalysis, .tdash, .tview) .legend { display: flex; flex-wrap: wrap; gap: 6px 18px; padding: 6px 8px 0; font-size: 12px; color: var(--muted); }
+:is(.ldash, .lanalysis, .tdash, .tview) .legend span { display: inline-flex; align-items: center; gap: 6px; }
+:is(.ldash, .lanalysis, .tdash, .tview) .sw { width: 12px; height: 12px; border-radius: 3px; background: var(--green); }
+:is(.ldash, .lanalysis, .tdash, .tview) .sw.current { background: rgba(6,204,2,.45); }
+:is(.ldash, .lanalysis, .tdash, .tview) .sw.ref { height: 0; border-radius: 0; background: none; border-top: 2px dashed rgba(255,255,255,.7); }
+
+/* tips */
+:is(.ldash, .lanalysis, .tdash, .tview) .tips { display: flex; flex-direction: column; gap: 10px; list-style: none; padding: 0; }
+:is(.ldash, .lanalysis, .tdash, .tview) .tip { display: flex; align-items: flex-start; gap: 12px; padding: 12px 14px; border: 1px solid var(--line); border-left: 3px solid var(--info); border-radius: 12px; background: #161616; font-size: 14px; line-height: 150%; }
+:is(.ldash, .lanalysis, .tdash, .tview) .tip.warning { border-left-color: var(--warn); }
+:is(.ldash, .lanalysis, .tdash, .tview) .tip.good { border-left-color: var(--green); }
+:is(.ldash, .lanalysis, .tdash, .tview) .tip-icon {
+  flex: none; width: 22px; height: 22px; display: grid; place-items: center; margin-top: 1px;
+  border-radius: 50%; background: rgba(90,169,255,.15); color: var(--info); font-size: 12px; font-weight: 700;
+}
+:is(.ldash, .lanalysis, .tdash, .tview) .tip.warning .tip-icon { background: rgba(255,176,32,.15); color: var(--warn); }
+:is(.ldash, .lanalysis, .tdash, .tview) .tip.good .tip-icon { background: rgba(6,204,2,.15); color: var(--green); }
+:is(.ldash, .lanalysis, .tdash, .tview) .tips-empty { padding: 14px; border-radius: 12px; background: #161616; font-size: 14px; color: var(--muted); }
+:is(.ldash, .lanalysis, .tdash, .tview) .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* status dots and pills */
+:is(.ldash, .lanalysis, .tdash, .tview) .dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--green); }
+:is(.ldash, .lanalysis, .tdash, .tview) .dot.off { background: var(--warn); }
+:is(.ldash, .lanalysis, .tdash, .tview) .dot.none { background: #555; }
+
+:is(.ldash, .lanalysis, .tdash, .tview) .error { padding: 12px 16px; border: 1px solid rgba(255,107,107,.4); border-radius: 12px; background: rgba(255,107,107,.08); color: var(--bad); font-size: 14px; }
+:is(.ldash, .lanalysis, .tdash, .tview) .state { display: flex; flex-direction: column; align-items: center; gap: 14px; padding: 60px 0; text-align: center; color: var(--muted); }
+
+@media (max-width: 700px) {
+  :is(.ldash, .lanalysis, .tdash, .tview) .card { padding: 18px 14px; }
+  :is(.ldash, .lanalysis, .tdash, .tview) .kpi { padding: 16px; }
+  :is(.ldash, .lanalysis, .tdash, .tview) .kpi .value { font-size: 24px; }
+}

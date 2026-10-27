@@ -1,0 +1,101 @@
+.lprofile { width: 100%; min-height: 60vh; padding: 30px 20px 60px; color: #fff; }
+.lprofile .wrap { width: min(1197px, 100%); margin: 0 auto; display: flex; flex-direction: column; gap: 24px; text-align: left; }
+.lprofile button:disabled { opacity: .5; cursor: not-allowed; }
+.lprofile .state { display: flex; flex-direction: column; align-items: center; gap: 14px; padding: 60px 0; text-align: center; color: var(--muted); }
+
+/* 1. headline */
+.lprofile .headline { display: flex; align-items: center; gap: 16px; }
+.lprofile .back { width: 44px; height: 44px; flex: none; display: grid; place-items: center; border: 1px solid var(--line); border-radius: 50%; background: #1c1c1c; cursor: pointer; transition: background .4s; }
+.lprofile .back:hover { background: var(--green); }
+.lprofile .back img { width: 12px; height: 20px; }
+.lprofile .eyebrow { font-size: 13px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.lprofile h1 { font-size: 32px; font-weight: 500; line-height: 130%; }
+
+/* 2. layout */
+.lprofile .grid { display: grid; grid-template-columns: 300px minmax(0, 1fr); gap: 24px; align-items: start; }
+.lprofile .card { border: 1px solid var(--line); border-top: 2px solid var(--green); border-radius: 24px; background: rgba(28,28,28,.94); box-shadow: 5px 5px 2px rgba(0,0,0,.3); }
+
+/* photo card */
+.lprofile .photo { position: sticky; top: 20px; display: flex; flex-direction: column; align-items: center; gap: 14px; padding: 30px 22px 24px; text-align: center; }
+.lprofile .avatar-btn { position: relative; width: 150px; height: 150px; padding: 4px; border-radius: 50%; background: conic-gradient(var(--green), rgba(6,204,2,.15), var(--green)); cursor: pointer; }
+.lprofile .avatar-btn img { width: 100%; height: 100%; display: block; border: 4px solid #1c1c1c; border-radius: 50%; object-fit: cover; background: #1a1a1a; }
+.lprofile .avatar-overlay {
+  position: absolute; inset: 8px; display: grid; place-items: center; border-radius: 50%;
+  background: rgba(0,0,0,.55); font-size: 14px; font-weight: 500; opacity: 0; transition: opacity .3s;
+}
+.lprofile .avatar-btn:hover .avatar-overlay, .lprofile .avatar-btn:focus-visible .avatar-overlay, .lprofile .avatar-btn:disabled .avatar-overlay { opacity: 1; }
+.lprofile .who { display: flex; flex-direction: column; gap: 2px; min-width: 0; max-width: 100%; }
+.lprofile .who b { font-size: 18px; font-weight: 500; overflow-wrap: anywhere; }
+.lprofile .who small { font-size: 13px; color: var(--muted); overflow-wrap: anywhere; }
+.lprofile .photo-actions { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 8px 16px; }
+.lprofile .link-btn { background: none; color: #ff6b6b; font-size: 14px; cursor: pointer; }
+.lprofile .link-btn:not(:disabled):hover { text-decoration: underline; }
+.lprofile .hint { font-size: 12px; font-weight: 300; color: var(--muted); }
+
+/* details card */
+.lprofile .details { display: flex; flex-direction: column; gap: 30px; padding: 30px 32px; }
+.lprofile .details h2 { font-size: 18px; font-weight: 500; color: var(--green); margin-bottom: 16px; }
+.lprofile .fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px 22px; }
+.lprofile .field { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.lprofile .field label { display: flex; justify-content: space-between; gap: 8px; font-size: 14px; color: #bfbfbf; }
+.lprofile .field label small { font-size: 12px; color: #7d7d7d; }
+.lprofile .field input, .lprofile .field select {
+  width: 100%; height: 50px; padding: 0 18px; border: 1px solid #5a5a5a; border-radius: 16px;
+  background: #1a1a1a; color: #fff; font-size: 15px; outline: none; transition: border-color .3s, box-shadow .3s;
+  color-scheme: dark;
+}
+.lprofile .field select { appearance: none; padding-right: 40px; cursor: pointer;
+  background: #1a1a1a url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%23bfbfbf' stroke-width='1.6'/%3E%3C/svg%3E") no-repeat right 18px center; }
+.lprofile .field input::placeholder { color: #6f6f6f; }
+.lprofile .field input:hover, .lprofile .field select:hover { border-color: #8a8a8a; }
+.lprofile .field input:focus, .lprofile .field select:focus { border-color: var(--green); box-shadow: 0 0 0 3px rgba(6,204,2,.18); }
+.lprofile .field.invalid input, .lprofile .new-room.invalid input { border-color: #ff6b6b; }
+.lprofile .field-error { font-size: 13px; color: #ff6b6b; }
+.lprofile input:-webkit-autofill { -webkit-box-shadow: 0 0 0 1000px #1a1a1a inset; -webkit-text-fill-color: #fff; }
+
+/* rooms */
+.lprofile .section-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 16px; }
+.lprofile .section-head h2 { margin-bottom: 0; }
+.lprofile .add-room { display: inline-flex; align-items: center; gap: 6px; padding: 8px 18px; border-radius: 20px; background: #bfbfbf; color: #1a1a1a; font-size: 14px; cursor: pointer; transition: background .4s; }
+.lprofile .add-room:hover { background: #d9d9d9; }
+.lprofile .add-room img { width: 20px; height: 20px; }
+.lprofile .muted { padding: 14px 16px; border-radius: 12px; background: #262626; color: var(--muted); font-size: 14px; }
+.lprofile .rooms { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(220px, 100%), 1fr)); gap: 10px; list-style: none; padding: 0; }
+.lprofile .room { display: flex; flex-direction: column; gap: 2px; min-width: 0; padding: 12px 16px; border: 1px solid #333; border-radius: 14px; background: #1a1a1a; }
+.lprofile .room b { font-size: 15px; font-weight: 500; overflow-wrap: anywhere; }
+.lprofile .room span { font-size: 13px; color: var(--muted); overflow-wrap: anywhere; }
+.lprofile .new-room { position: relative; display: flex; flex-direction: column; gap: 8px; margin-top: 12px; padding: 16px 52px 16px 16px; border: 1px dashed rgba(6,204,2,.5); border-radius: 16px; background: rgba(6,204,2,.04); }
+.lprofile .new-room-fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 16px; }
+.lprofile .remove-room { position: absolute; top: 12px; right: 12px; width: 30px; height: 30px; border-radius: 50%; background: #262626; color: #fff; font-size: 13px; cursor: pointer; transition: background .3s; }
+.lprofile .remove-room:hover { background: #ff0505; color: #1a1a1a; }
+
+/* footer */
+.lprofile .form-foot { display: flex; flex-direction: column; gap: 14px; padding-top: 20px; border-top: 1px solid var(--line); }
+.lprofile .message { padding: 12px 16px; border-radius: 12px; font-size: 14px; }
+.lprofile .message.ok { border: 1px solid rgba(6,204,2,.4); background: rgba(6,204,2,.08); color: var(--green); }
+.lprofile .message.error { border: 1px solid rgba(255,107,107,.4); background: rgba(255,107,107,.08); color: #ff6b6b; }
+.lprofile .buttons { display: flex; justify-content: flex-end; flex-wrap: wrap; gap: 12px; }
+.lprofile .save, .lprofile .discard { min-width: 160px; padding: 14px 28px; border-radius: 50px; font-size: 16px; font-weight: 500; cursor: pointer; transition: background .4s; }
+.lprofile .save { background: var(--green); color: #1a1a1a; }
+.lprofile .save:not(:disabled):hover { background: var(--green-hover); }
+.lprofile .discard { background: #313131; color: #fff; }
+.lprofile .discard:not(:disabled):hover { background: #3d3d3d; }
+
+@media (max-width: 960px) {
+  .lprofile .grid { grid-template-columns: 1fr; }
+  .lprofile .photo { position: static; flex-direction: row; flex-wrap: wrap; justify-content: center; text-align: left; gap: 14px 20px; }
+  .lprofile .avatar-btn { width: 110px; height: 110px; }
+  .lprofile .who { flex: 1 1 180px; }
+  .lprofile .photo-actions { justify-content: flex-start; }
+  .lprofile .hint { flex-basis: 100%; text-align: center; }
+}
+@media (max-width: 640px) {
+  .lprofile { padding: 20px 16px 50px; }
+  .lprofile h1 { font-size: 26px; }
+  .lprofile .photo { flex-direction: column; text-align: center; padding: 24px 18px 20px; }
+  .lprofile .who { flex: none; }
+  .lprofile .photo-actions { justify-content: center; }
+  .lprofile .details { padding: 22px 18px; gap: 24px; }
+  .lprofile .fields, .lprofile .new-room-fields { grid-template-columns: 1fr; }
+  .lprofile .buttons button { flex: 1 1 140px; }
+}

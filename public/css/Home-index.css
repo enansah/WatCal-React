@@ -1,0 +1,117 @@
+.home {
+  position: relative;
+  display: flex; flex-direction: column; align-items: center;
+  width: 100%; padding-top: 50px; gap: 80px;
+  overflow: hidden;
+}
+.home .text.small { font-size: 14px; color: #e3e3e8; }
+.home .title { font-size: 38px; font-weight: 500; line-height: 150%; }
+.home .section { width: 100%; display: flex; justify-content: center; padding: 0 20px 29px; text-align: left; }
+.home .section.pull-up { margin-top: -150px; }
+.home .inner { width: var(--w); max-width: 100%; display: flex; flex-direction: column; gap: 14px; }
+.home .stack { gap: 80px; }
+.home .narrow { max-width: 897px; display: flex; flex-direction: column; gap: 14px; }
+.home .vline { width: 1px; height: 473px; border-right: 1px solid var(--line); }
+.home .vline.dashed { height: 469px; border-right-style: dashed; }
+.home .hero-block { width: 100%; display: flex; flex-direction: column; align-items: center; gap: 50px; padding-bottom: 71px; }
+.home .tenant-btn {
+  cursor: pointer; padding: 10px 30px; border-radius: 20px; white-space: nowrap;
+  background: #000; color: var(--green); border: 1px solid var(--green); font-weight: 700;
+}
+.home .tenant-btn:hover { background: var(--green); color: #000; transition: .7s; }
+.home .hero { width: 100%; min-height: 538px; padding: 50px 82px 45px 0; position: relative; display: flex; align-items: center; }
+.home .welcome { width: 946px; max-width: 100%; padding-left: clamp(20px, 16.7vw, 240px); display: flex; flex-direction: column; align-items: flex-start; gap: 20px; z-index: 1; }
+.home .badge { display: flex; align-items: center; gap: 6px; padding: 10px 20px 10px 12px; background: var(--line); border-radius: 61px; font-weight: 300; line-height: 24px; white-space: nowrap; }
+.home .badge img { width: 24px; height: 24px; }
+.home .hero-title { font-size: 48px; font-weight: 500; line-height: 150%; }
+.home .hero-title p { margin: 0; }
+.home .hero-title + .text { margin-top: -6px; }
+.home .hero-art-right,
+.home .hero-art-left { pointer-events: none; }
+.home .hero-art-right { position: absolute; width: 21.8%; height: auto; right: 17.4%; }
+/* Hangs from the top-left of .home, which starts right under the nav, so the tip always meets the nav
+   and the whole wave stays on screen (the artwork starts at the image's very left edge) */
+.home .hero-art-left { position: absolute; width: 45%; height: auto; top: 0; left: 0; z-index: 2; }
+.home .features { flex-direction: row; flex-wrap: wrap; justify-content: center; gap: 49.5px; text-align: center; font-size: 24px; }
+.home .feature { flex: 1; min-width: 216px; display: flex; flex-direction: column; align-items: center; gap: 20px; }
+.home .feature h3,
+.home .card h3,
+.home .value h3 { font-weight: 400; font-size: inherit; line-height: 150%; }
+.home .icon-ring { flex: none; width: 98px; height: 98px; padding: 12px; border-radius: 70px; background: linear-gradient(180deg, rgba(202,255,51,.05), rgba(202,255,51,0)); }
+.home .icon-badge { width: 74px; height: 74px; padding: 20px 19px; border-radius: 50px; border: 1px solid rgba(202,255,51,.2); background: linear-gradient(180deg, rgba(202,255,51,.1), rgba(202,255,51,0) 46.77%); }
+.home .icon-badge img { width: 34px; height: 34px; }
+.home .feature .icon-ring { margin-bottom: 10px; }
+.home .benefit-cards { display: flex; flex-wrap: wrap; gap: 30px; font-size: 24px; }
+.home .card {
+  flex: 1; min-width: min(356px, 100%); min-height: 0; padding: 36px 36px;
+  display: flex; flex-direction: column; align-items: center; gap: 20px;
+  border-radius: 50px 20px 50px 20px;
+  background: var(--card-bg) top / cover no-repeat;
+}
+.home .card.alt { border-radius: 20px 50px 20px 50px; }
+.home .card-head { align-self: stretch; display: flex; align-items: center; gap: 14px; }
+.home .card-head h3 { flex: 1; }
+.home .values { display: flex; flex-wrap: wrap; gap: 80px; font-size: 48px; color: #4c4c4d; }
+.home .value { flex: 1 1 min(363px, 100%); display: flex; flex-direction: column; gap: 30px; padding-left: 29px; border-left: 1px solid var(--green); }
+.home .value:last-child { flex-basis: 100%; max-width: 748px; }
+.home .value h3 { font-weight: 500; line-height: 150%; }
+.home .faq-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(379px, 100%), 1fr)); gap: 30px; padding-bottom: 80px; }
+.home .faq { display: flex; flex-direction: column; gap: 29.5px; padding: 48px 49px; border: 1px solid var(--line); border-radius: 14px; }
+.home .faq h4 { font-size: 20px; font-weight: 500; line-height: normal; }
+.home .cta {
+  position: relative; overflow: hidden; width: var(--w); max-width: 100%;
+  display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 20px;
+  padding: 78px 81px 78px 79px; border-radius: 20px;
+  background: var(--card-bg) top / cover no-repeat;
+}
+.home .cta-art { position: absolute; top: 0; bottom: 0; left: .5px; height: 100%; width: 283px; z-index: 0; pointer-events: none; }
+.home .cta-text { position: relative; z-index: 1; width: 731px; max-width: 100%; display: flex; flex-direction: column; gap: 14px; font-size: 30px; }
+.home .cta-text h2 { font-weight: 400; line-height: 150%; font-size: inherit; }
+.home .cta .btn { margin-top: 25px; position: relative; z-index: 1; }
+.home { padding-top: 0; }
+@media (max-width: 1200px) {
+  .home .stack { gap: 40px; }
+  .home .cta { justify-content: center; padding: 78px 40px; }
+}
+@media (max-width: 1050px) {
+  .home .title { font-size: 30px; }
+  .home .values { font-size: 38px; gap: 40px; }
+  .home .hero-title { font-size: 38px; line-height: 58px; }
+  .home .hero { padding-right: 41px; }
+  .home .vline { width: 100%; height: 1px; border-right: 0; border-top: 1px solid var(--line); }
+  .home .cta-text { font-size: 24px; }
+}
+@media (max-width: 750px) {
+  .home { gap: 40px; padding-top: 30px; }
+  .home .hero-block { gap: 30px; padding-bottom: 30px; }
+  .home .section { padding: 0 16px 20px; }
+  .home .section.pull-up { margin-top: 0; }
+  .home .stack { gap: 20px; }
+  .home .features { gap: 25px; }
+  .home .benefit-cards { gap: 14px; }
+  .home .benefit-cards .vline { display: none; }
+  .home .card { padding: 22px 18px; gap: 12px; }
+  .home .faq { padding: 32px 24px; min-height: 0; }
+  .home .card-head { flex-direction: column; gap: 8px; text-align: center; }
+  .home .card .icon-ring { transform: scale(.85); margin: -8px 0; }
+  .home .card h3 { font-size: 20px; }
+  .home .hero { min-height: 0; padding: 40px 0 0; }
+  .home .welcome { padding: 0 20px; }
+  .home .hero-title { font-size: 30px; line-height: 46px; }
+  .home .tenant-btn { padding: 10px 20px; white-space: normal; text-align: center; }
+  .home .values { font-size: 28px; gap: 30px; }
+  .home .value { padding-left: 16px; }
+  .home .faq-grid { padding-bottom: 20px; }
+  .home .faq h4 { font-size: 18px; }
+  .home .cta { padding: 40px 24px; }
+  .home .cta-text { font-size: 20px; }
+}
+@media (max-width: 1050px) {
+  .home .tenant-btn { padding: 9px 24px; font-size: 14px; }
+}
+@media (max-width: 717px) {
+  .home .tenant-btn { padding: 8px 18px; font-size: 13px; }
+}
+@media (max-width: 480px) {
+  .home .tenant-btn { padding: 8px 14px; font-size: 12px; }
+}

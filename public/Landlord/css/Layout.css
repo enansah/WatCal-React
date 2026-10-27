@@ -1,0 +1,82 @@
+.llayout { position: relative; min-height: 100vh; display: flex; }
+/* The electric animation shows through the pages, softened so it stays behind the content */
+.llayout .electric { filter: blur(1.5px); }
+.lstate { position: relative; z-index: 1; flex: 1; display: grid; place-content: center; justify-items: center; gap: 16px; color: var(--muted); }
+
+/* ---------- sidebar ---------- */
+.sidebar {
+  position: sticky; top: 0; z-index: 100; flex: none; align-self: flex-start; width: 260px; height: 100vh; overflow-y: auto;
+  display: flex; flex-direction: column; gap: 6px; padding: 22px 16px 18px;
+  background: rgba(28,28,28,.96); border-right: 1px solid var(--line); color: var(--muted);
+}
+.brand-row { display: flex; justify-content: space-between; align-items: center; padding: 0 8px 18px; margin-bottom: 8px; border-bottom: 1px solid var(--line); }
+.close { display: none; width: 34px; height: 34px; border-radius: 8px; background: var(--line); color: #fff; cursor: pointer; }
+.group { padding: 8px 14px 4px; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: #6f6f6f; }
+.sidebar nav { display: flex; flex-direction: column; gap: 4px; }
+
+.nitem {
+  display: flex; align-items: center; gap: 12px; width: 100%; padding: 11px 14px; border-radius: 10px;
+  background: transparent; color: #bfbfbf; font-size: 15px; text-align: left; cursor: pointer; transition: background .3s, color .3s;
+}
+.nitem img { width: 20px; height: 20px; opacity: .7; transition: opacity .3s; }
+.nitem:hover { background: rgba(255,255,255,.06); color: #fff; }
+.nitem:hover img { opacity: 1; }
+.nitem.active { background: rgba(6,204,2,.12); color: var(--green); box-shadow: inset 3px 0 var(--green); font-weight: 500; }
+.nitem.active img { opacity: 1; }
+.nitem.logout:hover { background: rgba(255,5,5,.1); color: #ff5a5a; }
+
+.side-bottom { margin-top: auto; display: flex; flex-direction: column; gap: 6px; padding-top: 16px; border-top: 1px solid var(--line); }
+.profile { display: flex; align-items: center; gap: 12px; width: 100%; padding: 10px; border-radius: 12px; background: #1a1a1a; text-align: left; cursor: pointer; transition: background .3s; }
+.profile:hover { background: #262626; }
+.profile img { width: 40px; height: 40px; flex: none; border-radius: 50%; object-fit: cover; }
+.profile span { min-width: 0; display: flex; flex-direction: column; }
+.profile b { font-size: 14px; font-weight: 500; color: #fff; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.profile small { font-size: 11px; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.lnotice { font-size: 13px; color: #ff6b6b; }
+.dlegal { display: flex; justify-content: center; align-items: center; gap: 10px; padding-top: 8px; font-size: 12px; font-weight: 300; }
+.dlegal span { cursor: pointer; }
+.dlegal span:hover { color: var(--green); }
+.dlegal i { width: 1px; height: 14px; background: #4a4a4a; }
+
+/* ---------- content ---------- */
+.lcontent { position: relative; z-index: 1; flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.ltop {
+  position: sticky; top: 0; z-index: 80; min-height: 64px; display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 0 32px;
+  background: rgba(28,28,28,.92); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); border-bottom: 1px solid var(--line);
+}
+.ltop-left { display: flex; align-items: center; gap: 14px; }
+.crumb { font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.ltop h2 { font-size: 20px; font-weight: 500; line-height: 130%; }
+.lmenu { display: none; padding: 8px 12px; border-radius: 10px; background: #1a1a1a; cursor: pointer; transition: background .3s; }
+.lmenu:hover { background: var(--green); }
+.lmenu img { display: block; width: 22px; height: 22px; }
+.luser { display: flex; align-items: center; gap: 10px; padding: 4px 4px 4px 14px; border-radius: 50px; background: transparent; color: #fff; font-size: 15px; cursor: pointer; transition: background .3s; }
+.luser:hover { background: rgba(255,255,255,.06); }
+.luser img { width: 38px; height: 38px; border-radius: 50%; object-fit: cover; }
+
+.lpage { flex: 1; }
+.lfooter {
+  display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px 24px; padding: 20px 32px;
+  background: rgba(28,28,28,.96); border-top: 1px solid var(--line); font-size: 13px; font-weight: 300; color: var(--muted);
+}
+.lfooter div { display: flex; gap: 22px; }
+
+/* ---------- small screens: sidebar becomes a slide-in menu ---------- */
+.lback { position: fixed; inset: 0; z-index: 9998; background: rgba(0,0,0,.55); -webkit-backdrop-filter: blur(2px); backdrop-filter: blur(2px); }
+@media (max-width: 1023px) {
+  .sidebar {
+    position: fixed; z-index: 9999; left: 0; max-width: 85vw; border-radius: 0 20px 20px 0; border-right-color: var(--green);
+    transform: translateX(-105%); visibility: hidden; transition: transform .3s ease, visibility .3s;
+  }
+  .sidebar.open { transform: none; visibility: visible; }
+  .close, .lmenu { display: block; }
+  .ltop { padding: 0 16px; }
+  .lfooter { padding: 18px 16px; }
+}
+@media (max-width: 600px) {
+  .luser span { display: none; }
+  .luser { padding: 4px; }
+}
+/* Account types without an Edit profile page show the profile as plain information */
+div.profile, div.luser { cursor: default; }
+div.profile:hover { background: #1a1a1a; }

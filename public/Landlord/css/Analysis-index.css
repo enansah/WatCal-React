@@ -1,0 +1,71 @@
+/* Landlord Analysis (one room at a time). Figures, cards, chart and tips are styled in Insights.css */
+.lanalysis { width: 100%; min-height: 60vh; padding: 30px 20px 60px; color: #fff; }
+.lanalysis .wrap { width: min(1197px, 100%); margin: 0 auto; display: flex; flex-direction: column; gap: 22px; text-align: left; }
+
+/* room picker */
+.lanalysis .room-tabs { display: flex; gap: 10px; padding-bottom: 4px; overflow-x: auto; }
+.lanalysis .room-tabs button {
+  flex: none; display: grid; grid-template-columns: auto auto; align-items: center; column-gap: 8px; padding: 10px 16px;
+  border: 1px solid var(--line); border-radius: 14px; background: rgba(28,28,28,.92); color: #fff; text-align: left; cursor: pointer;
+  transition: border-color .2s, background .2s;
+}
+.lanalysis .room-tabs button:hover { border-color: #3a3a3a; }
+.lanalysis .room-tabs button.on { border-color: var(--green); background: rgba(6,204,2,.1); }
+.lanalysis .room-tabs b { font-size: 14px; font-weight: 500; }
+.lanalysis .room-tabs small { grid-column: 2; font-size: 12px; color: var(--muted); }
+
+/* room header */
+.lanalysis .room-head { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px 20px; }
+.lanalysis .room-head h1 { font-size: 28px; font-weight: 500; line-height: 130%; }
+.lanalysis .tenant { font-size: 14px; color: var(--muted); }
+.lanalysis .tenant b { color: var(--green); font-weight: 500; }
+.lanalysis .meter { display: flex; align-items: center; flex-wrap: wrap; gap: 6px 10px; margin-top: 4px; font-size: 14px; color: var(--muted); }
+.lanalysis .meter b { color: #fff; font-weight: 500; }
+.lanalysis .meter b.unset { color: var(--warn); }
+.lanalysis .link { padding: 0; background: none; color: var(--green); font-size: 13px; text-decoration: underline; cursor: pointer; }
+.lanalysis .meter-form { display: flex; align-items: flex-end; flex-wrap: wrap; gap: 8px 10px; margin-top: 8px; }
+.lanalysis .meter-form label { display: flex; flex-direction: column; gap: 4px; font-size: 12px; color: var(--muted); }
+.lanalysis .meter-form input { width: min(300px, 70vw); height: 38px; padding: 0 12px; border: 1px solid #3a3a3a; border-radius: 10px; background: #111; color: #fff; font-size: 14px; outline: none; }
+.lanalysis .meter-form input:focus { border-color: var(--green); }
+.lanalysis .meter-form input[aria-invalid="true"] { border-color: var(--bad); }
+.lanalysis .meter-form .help, .lanalysis .meter-form .field-error { flex-basis: 100%; font-size: 12px; color: var(--muted); }
+.lanalysis .meter-form .field-error { color: var(--bad); }
+.lanalysis .room-tools { display: flex; align-items: center; flex-wrap: wrap; gap: 10px 14px; }
+.lanalysis .power { display: inline-flex; align-items: center; gap: 10px; font-size: 14px; color: var(--muted); }
+.lanalysis .tool { display: inline-flex; align-items: center; gap: 8px; padding: 9px 16px; border: 1px solid var(--line); border-radius: 12px; background: #1c1c1c; color: #fff; font-size: 14px; cursor: pointer; transition: background .2s, border-color .2s; }
+.lanalysis .tool img { width: 15px; height: 15px; }
+.lanalysis .tool:hover { border-color: var(--green); }
+.lanalysis .tool.danger:hover { border-color: #ff5252; background: rgba(255,82,82,.1); }
+
+.lanalysis .split { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 22px; align-items: start; }
+
+/* readings table */
+.lanalysis .table-wrap { overflow-x: auto; }
+.lanalysis .readings { width: 100%; min-width: 420px; border-collapse: collapse; font-size: 14px; }
+.lanalysis .readings th, .lanalysis .readings td { padding: 10px; border-bottom: 1px solid var(--line); text-align: left; white-space: nowrap; }
+.lanalysis .readings thead th { font-size: 12px; font-weight: 400; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.lanalysis .readings .num { text-align: right; font-variant-numeric: tabular-nums; }
+.lanalysis .more { align-self: flex-start; padding: 8px 18px; border: 1px solid var(--line); border-radius: 20px; background: transparent; color: var(--green); font-size: 14px; cursor: pointer; }
+.lanalysis .more:hover { border-color: var(--green); }
+
+/* on/off switch */
+.lanalysis .switch { position: relative; width: 66px; height: 28px; border: 1px solid #000; border-radius: 6px; cursor: pointer; transition: background .3s; }
+.lanalysis .switch.on { background: var(--green); }
+.lanalysis .switch.off { background: #d9d9d9; }
+.lanalysis .knob { position: absolute; top: 3px; left: 3px; width: 29px; height: 20px; border-radius: 5px; background: #000; transition: transform .3s; }
+.lanalysis .switch.on .knob { transform: translateX(31px); }
+.lanalysis .sw-text { position: absolute; top: 50%; transform: translateY(-50%); font-size: 10px; color: #000; font-weight: 700; }
+.lanalysis .switch.on .sw-text { left: 9px; }
+.lanalysis .switch.off .sw-text { right: 9px; }
+
+.lanalysis .toast { position: fixed; left: 50%; bottom: 28px; z-index: 9999; transform: translateX(-50%); display: flex; align-items: center; gap: 18px; max-width: calc(100% - 32px); padding: 14px 20px; border: 2px solid var(--green); border-radius: 16px; background: #000; color: var(--green); font-size: 15px; }
+.lanalysis .toast button { padding: 6px 20px; border: 1px solid var(--green); border-radius: 20px; color: var(--green); cursor: pointer; transition: .7s; }
+.lanalysis .toast button:hover { background: var(--green); color: #000; }
+
+@media (max-width: 900px) {
+  .lanalysis .split { grid-template-columns: 1fr; }
+}
+@media (max-width: 700px) {
+  .lanalysis { padding-top: 20px; }
+  .lanalysis .room-head h1 { font-size: 22px; }
+}

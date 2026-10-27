@@ -1,0 +1,26 @@
+# Netlify hosts the React pages. The Express backend (server.js) runs on a separate host, e.g. Render.
+# Security headers for the pages come from site-headers.mjs (the build writes them to dist/_headers).
+# On the backend, set TRUST_PROXY=2 so it sees visitors' real addresses through this proxy.
+
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+# Send API calls to the backend. The browser only ever talks to the Netlify address, so the login cookie
+# stays first-party and no CORS setup is needed.
+# >>> Replace https://watcal-api.onrender.com with your backend's real address once it is deployed. <<<
+[[redirects]]
+  from = "/api/*"
+  to = "https://watcal-api.onrender.com/api/:splat"
+  status = 200
+  force = true
+
+# Every other path is a React page: serve the app and let React Router pick the page,
+# so refreshing e.g. /tenant/dashboard doesn't give a 404. Real files (images, CSS) are served first.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
