@@ -11,10 +11,10 @@
 
 # Send API calls to the backend. The browser only ever talks to the Netlify address, so the login cookie
 # stays first-party and no CORS setup is needed.
-# >>> Replace https://watcal-api.onrender.com with your backend's real address once it is deployed. <<<
+# The backend on Render
 [[redirects]]
   from = "/api/*"
-  to = "https://watcal-api.onrender.com/api/:splat"
+  to = "https://watcal-react.onrender.com/api/:splat"
   status = 200
   force = true
 
