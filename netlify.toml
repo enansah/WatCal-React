@@ -7,7 +7,7 @@
   publish = "dist"
 
 [build.environment]
-  NODE_VERSION = "22"
+  NODE_VERSION = "24"  # same as package.json "engines" (Render) and local development
 
 # Send API calls to the backend. The browser only ever talks to the Netlify address, so the login cookie
 # stays first-party and no CORS setup is needed.
