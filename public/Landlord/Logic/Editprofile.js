@@ -56,9 +56,9 @@ export const PRIVATE_USER_PROFILE = {
 };
 
 export default function useAccountEditProfile(config = LANDLORD_PROFILE) {
+  const { profileUrl, updateUrl, avatarUrl, roomsUrl, settingsPath } = config;
   const goBack = useGoBack(settingsPath); // previous WatCal page, or Settings
   const { account, updateAccount } = useAccount();
-  const { profileUrl, updateUrl, avatarUrl, roomsUrl, settingsPath } = config;
 
   const [status, setStatus] = useState("loading"); // loading | ok | error
   const [form, setForm] = useState(EMPTY);

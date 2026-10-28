@@ -77,7 +77,7 @@
 .lprofile .message.error { border: 1px solid rgba(255,107,107,.4); background: rgba(255,107,107,.08); color: #ff6b6b; }
 .lprofile .buttons { display: flex; justify-content: flex-end; flex-wrap: wrap; gap: 12px; }
 .lprofile .save, .lprofile .discard { min-width: 160px; padding: 14px 28px; border-radius: 50px; font-size: 16px; font-weight: 500; cursor: pointer; transition: background .4s; }
-.lprofile .save { background: var(--green); color: #1a1a1a; }
+.lprofile .save { background: var(--green); color: #000; }
 .lprofile .save:not(:disabled):hover { background: var(--green-hover); }
 .lprofile .discard { background: #313131; color: #fff; }
 .lprofile .discard:not(:disabled):hover { background: #3d3d3d; }

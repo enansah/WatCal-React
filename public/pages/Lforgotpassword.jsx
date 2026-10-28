@@ -11,7 +11,7 @@ export default function ForgotPassword() {
         {/* BRAND */}
         <div className="brand">
           <div className="name">
-            <div className="logo"><img alt="" src="/images/dlogo.png" /></div>
+            <img className="lg" alt="" src="/images/lg.png" />
             <h1>WatCal</h1>
           </div>
         </div>

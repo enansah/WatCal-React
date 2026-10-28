@@ -37,7 +37,7 @@
 
 .login-page .forgot { align-self: center; background: none; color: #fff; font-size: 18px; text-decoration: underline; cursor: pointer; }
 .login-page .actions { width: 400px; max-width: 100%; align-self: center; display: flex; flex-direction: column; gap: 24px; }
-.login-page .actions .btn { width: 100%; padding: 15px 20px; border-radius: 63px; text-align: center; color: #262626; }
+.login-page .actions .btn { width: 100%; padding: 15px 20px; border-radius: 63px; text-align: center; color: #000; }
 .login-page .actions .btn:disabled { opacity: .6; cursor: not-allowed; }
 .login-page .btn-alt {
   width: 100%; padding: 13px 19px; border: 1px solid #333; border-radius: 63px;

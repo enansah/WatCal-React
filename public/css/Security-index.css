@@ -44,7 +44,7 @@
 /* data steps */
 .security .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr)); gap: 30px; }
 .security .step { display: flex; flex-direction: column; gap: 14px; padding: 32px 28px; border: 1px solid var(--line); border-radius: 16px; }
-.security .step-num { width: 44px; height: 44px; display: grid; place-items: center; border-radius: 50%; background: var(--green); color: var(--panel); font-weight: 500; }
+.security .step-num { width: 44px; height: 44px; display: grid; place-items: center; border-radius: 50%; background: var(--green); color: #000; font-weight: 500; }
 .security .step h3 { font-size: 20px; font-weight: 500; line-height: 130%; color: #fff; }
 
 /* safety tips */

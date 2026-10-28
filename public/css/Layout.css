@@ -1,5 +1,6 @@
 /* ===== global base ===== */
 :root {
+  color-scheme: dark; /* see index.html: keeps browsers from auto-darkening the page */
   --green: #06cc02;
   --green-hover: #1fe61c;
   --panel: #1c1c1c;
@@ -21,7 +22,7 @@ img { object-fit: contain; }
 
 .link { cursor: pointer; line-height: 150%; white-space: nowrap; }
 .btn, .btn-ghost { cursor: pointer; font-size: 16px; line-height: 150%; white-space: nowrap; border-radius: 8px; }
-.btn { padding: 6px 30px; background: var(--green); color: var(--panel); }
+.btn { padding: 6px 30px; background: var(--green); color: #000; }
 .btn.small { padding: 8px 18px; font-size: 14px; }
 .btn:hover { background: var(--green-hover); transition: .7s; }
 .btn-ghost { padding: 5px 10px; background: transparent; color: #fff; }
@@ -89,7 +90,7 @@ img { object-fit: contain; }
 }
 .modal .option { width: 100%; cursor: pointer; padding: 9px; border-radius: 5px; font-size: 15px; transition: .7s; }
 .modal.outline .option { border: 3px solid var(--green); background: transparent; color: var(--muted); }
-.modal.outline .option:hover, .modal.outline .option:focus-visible { background: var(--green); color: var(--panel); }
+.modal.outline .option:hover, .modal.outline .option:focus-visible { background: var(--green); color: #000; }
 .popup.modal.solid { width: min(270px, 100%); background: #000; border-radius: 10px; }
 .modal.solid .option { padding: 11px 24px; background: var(--green); color: #000; }
 .modal.solid .option:hover, .modal.solid .option:focus-visible { background: #04a702; }
