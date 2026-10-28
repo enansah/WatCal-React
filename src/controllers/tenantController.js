@@ -6,6 +6,7 @@ const sessionAccount = require('../../utils/sessionAccount');
 const Tenant = require('../models/Tenant');
 const { pendingGoogleId, clearGoogleSignup } = require('./googleAuth');
 const { meterInUse, importPastReadings } = require('../../utils/meters');
+const { termsAcceptance, NOT_ACCEPTED: TERMS_NOT_ACCEPTED } = require('../../utils/terms');
 
 exports.registerTenant = async (req, res) => {
     const {
@@ -28,6 +29,11 @@ exports.registerTenant = async (req, res) => {
         tenant = await Tenant.findOne({ email });
         if (tenant) {
             return res.status(400).json({ msg: 'Email already exists' });
+        }
+
+        const terms = termsAcceptance(req.body);
+        if (!terms) {
+            return res.status(400).json({ msg: TERMS_NOT_ACCEPTED });
         }
 
         // A meter's readings go to one room or account only
@@ -56,7 +62,8 @@ exports.registerTenant = async (req, res) => {
             houseAddress,
             meterSerialNumber,
             meterType,
-            googleId: googleId || undefined
+            googleId: googleId || undefined,
+            ...terms
         });
 
         await tenant.save();

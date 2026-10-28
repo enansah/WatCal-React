@@ -48,6 +48,13 @@ const TenantSchema = new mongoose.Schema({
   lastDashboardVisit: {
     type: Date,
   },
+  // When the account agreed to the Terms of Service and Privacy Policy at sign-up, and which version
+  termsAcceptedAt: {
+    type: Date,
+  },
+  termsVersion: {
+    type: String,
+  },
 });
 
 module.exports = mongoose.model('Tenant', TenantSchema);

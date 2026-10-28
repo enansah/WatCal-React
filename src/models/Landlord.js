@@ -46,6 +46,13 @@ const LandlordSchema = new mongoose.Schema({
     // Profile photo as a small data URL (the browser crops it to a 256px square before upload)
     avatar: {
         type: String,
+    },
+    // When the account agreed to the Terms of Service and Privacy Policy at sign-up, and which version
+    termsAcceptedAt: {
+        type: Date,
+    },
+    termsVersion: {
+        type: String,
     }
 });
 

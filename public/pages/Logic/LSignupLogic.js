@@ -27,6 +27,7 @@ export default function useLSignupLogic() {
     meterSerialNumber: "",
     meterType: "",
   });
+  const [acceptTerms, setAcceptTerms] = useState(false); // must be ticked to sign up
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
 
@@ -82,6 +83,7 @@ export default function useLSignupLogic() {
       if (seen.has(key)) return fail(`${seen.get(key)} and ${r.room.trim()} have the same meter number. Each room needs its own meter.`);
       seen.set(key, r.room.trim());
     }
+    if (!acceptTerms) return fail("Please agree to the Terms of Service and Privacy Policy to continue.");
 
     setMessage("");
     setSuccess(false);
@@ -98,6 +100,7 @@ export default function useLSignupLogic() {
           username: username.trim(),
           email: email.trim(),
           roomsData: filledRooms.map((r) => ({ room: r.room.trim(), email: r.email.trim(), meter: r.meter.trim() })),
+          acceptTerms,
         }),
       });
       const data = await res.json().catch(() => ({}));
@@ -127,6 +130,8 @@ export default function useLSignupLogic() {
     addRoom,
     removeRoom,
     handleRoomChange,
+    acceptTerms,
+    setAcceptTerms,
     google,
     leaveGoogle: () => {
       setMessage("");

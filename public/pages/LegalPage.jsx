@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import { useNavigate } from "react-router-dom";
+import useGoBack from "../components/useGoBack.js";
 import "../css/Legal.css";
 
 export const CONTACT_EMAIL = "manuelansah955@gmail.com";
@@ -21,8 +21,7 @@ function Paragraphs({ content }) {
  * groups: [{ title?, icon?, sections: [[id, title, content], ...] }]. A group without a title shows no heading.
  */
 export default function LegalPage({ pill, title, accent, updated, intro, groups, idPrefix }) {
-  const navigate = useNavigate();
-  const goBack = () => (window.history.length > 1 ? navigate(-1) : navigate("/"));
+  const goBack = useGoBack("/"); // previous WatCal page, or the home page
 
   // Scroll so the section's heading sits just below the sticky site header
   const jumpTo = (id) => {

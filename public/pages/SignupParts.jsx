@@ -90,6 +90,18 @@ export function DateOfBirth({ value, onChange, hint }) {
   );
 }
 
+// Required agreement above the Sign Up button. The links open in a new tab so the form isn't lost.
+export const TermsAgreement = ({ checked, onChange }) => (
+  <label className="terms">
+    <input type="checkbox" checked={checked} onChange={(e) => onChange(e.target.checked)} />
+    <span>
+      I agree to the{" "}
+      <a href="/Terms" target="_blank" rel="noopener noreferrer">Terms of Service</a> and{" "}
+      <a href="/Privacy" target="_blank" rel="noopener noreferrer">Privacy Policy</a>.
+    </span>
+  </label>
+);
+
 export const EyeButton = ({ shown, onClick }) => (
   <button type="button" className="eye-btn" aria-label={shown ? "Hide password" : "Show password"} aria-pressed={shown} onClick={onClick}>
     <img className="eye" alt="" src={shown ? "/images/closed-eyel.png" : "/images/eye.svg"} />

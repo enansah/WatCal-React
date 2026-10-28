@@ -15,6 +15,7 @@ export const useTSignupLogic = () => {
   const [houseAddress, setHouseAddress] = useState("");
   const [meterSerialNumber, setMeterSerialNumber] = useState("");
   const [meterType, setMeterType] = useState("");
+  const [acceptTerms, setAcceptTerms] = useState(false); // must be ticked to sign up
 
   const [message, setMessage] = useState("");
   const [success, setSuccess] = useState(false);
@@ -51,6 +52,11 @@ export const useTSignupLogic = () => {
       setMessage("Passwords do not match.");
       return;
     }
+    if (!acceptTerms) {
+      setSuccess(false);
+      setMessage("Please agree to the Terms of Service and Privacy Policy to continue.");
+      return;
+    }
 
     setMessage("");
     setSuccess(false);
@@ -68,6 +74,7 @@ export const useTSignupLogic = () => {
           houseAddress,
           meterSerialNumber,
           meterType,
+          acceptTerms,
         }),
       });
       const data = await response.json().catch(() => ({}));
@@ -101,6 +108,7 @@ export const useTSignupLogic = () => {
     houseAddress, setHouseAddress,
     meterSerialNumber, setMeterSerialNumber,
     meterType, setMeterType,
+    acceptTerms, setAcceptTerms,
     google,
     leaveGoogle: () => {
       setMessage("");

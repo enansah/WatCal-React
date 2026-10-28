@@ -3,7 +3,7 @@ import "../css/Signup-index.css";
 import useLSignupLogic from "./Logic/LSignupLogic";
 import { useLayout } from "./Logic/LayoutContext.js";
 import GoogleButton from "../components/GoogleButton.jsx";
-import { DateOfBirth, EyeButton, Field, FormSection } from "./SignupParts.jsx";
+import { DateOfBirth, EyeButton, Field, FormSection, TermsAgreement } from "./SignupParts.jsx";
 
 
 export default function LSignup() {
@@ -15,6 +15,8 @@ export default function LSignup() {
     addRoom,
     removeRoom,
     handleRoomChange,
+    acceptTerms,
+    setAcceptTerms,
     message,
     success,
     loading,
@@ -181,6 +183,8 @@ export default function LSignup() {
             </section>
 
             <div className="rule" />
+
+            <TermsAgreement checked={acceptTerms} onChange={setAcceptTerms} />
 
             <div className="actions">
               <button type="submit" className="btn" disabled={loading}>

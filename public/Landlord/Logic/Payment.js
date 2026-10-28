@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import useGoBack from "../../components/useGoBack.js";
 import { useAccount } from "../../components/AccountContext.js";
 
 // Flip to true once a payment provider is connected in submitPayment below
@@ -48,7 +48,7 @@ export const PRIVATE_USER_PAYMENT = {
 };
 
 export default function useAccountPayment(config = LANDLORD_PAYMENT) {
-  const navigate = useNavigate();
+  const goBack = useGoBack(config.backPath); // previous WatCal page, or the dashboard
   const { account } = useAccount(); // the logged-in account (landlord or private user)
 
   const [totals, setTotals] = useState({ status: "loading", cost: "Ghs--", kwh: null, amount: "" });
@@ -132,6 +132,6 @@ export default function useAccountPayment(config = LANDLORD_PAYMENT) {
     chooseProvider, setField, submit,
     fillTotal: () => setForm((f) => ({ ...f, amount: totals.amount })),
     closeResult: () => setResult(null),
-    goBack: () => (window.history.length > 1 ? navigate(-1) : navigate(config.backPath)),
+    goBack,
   };
 }

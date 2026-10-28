@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import useGoBack from "../../components/useGoBack.js";
 import { useAccount } from "../../components/AccountContext.js";
 
 const FIELDS = ["username", "email", "dateOfBirth", "meterSerialNumber", "houseAddress", "meterType"];
@@ -56,7 +56,7 @@ export const PRIVATE_USER_PROFILE = {
 };
 
 export default function useAccountEditProfile(config = LANDLORD_PROFILE) {
-  const navigate = useNavigate();
+  const goBack = useGoBack(settingsPath); // previous WatCal page, or Settings
   const { account, updateAccount } = useAccount();
   const { profileUrl, updateUrl, avatarUrl, roomsUrl, settingsPath } = config;
 
@@ -226,6 +226,6 @@ export default function useAccountEditProfile(config = LANDLORD_PROFILE) {
     choosePhoto: () => fileRef.current?.click(),
     pickPhoto,
     removePhoto: () => sendPhoto(null),
-    goBack: () => (window.history.length > 1 ? navigate(-1) : navigate(settingsPath)),
+    goBack,
   };
 }

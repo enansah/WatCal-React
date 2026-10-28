@@ -8,6 +8,7 @@ const Landlord = require('../models/Landlord');
 const Room = require('../models/Room');
 const { pendingGoogleId, clearGoogleSignup } = require('./googleAuth');
 const { newRoomMetersProblem, importPastReadings } = require('../../utils/meters');
+const { termsAcceptance, NOT_ACCEPTED: TERMS_NOT_ACCEPTED } = require('../../utils/terms');
 
 // Function to generate a random 8-character string
 function generateRandomString() {
@@ -52,6 +53,11 @@ exports.registerLandlord = async (req, res) => {
       return res.status(400).json({ msg: 'Please enter a password' });
     }
 
+    const terms = termsAcceptance(req.body);
+    if (!terms) {
+      return res.status(400).json({ msg: TERMS_NOT_ACCEPTED });
+    }
+
     if (!Array.isArray(roomsData)) {
       return res.status(400).json({ msg: 'Rooms must be a list' });
     }
@@ -89,6 +95,7 @@ exports.registerLandlord = async (req, res) => {
       roomIds,
       uniqueId: generateRandomString(),
       googleId: googleId || undefined,
+      ...terms,
     });
 
     // Check the landlord is valid before writing anything

@@ -3,7 +3,7 @@ import "../css/Signup-index.css";
 import { useTSignupLogic } from "./Logic/TSignupLogic";
 import { useLayout } from "./Logic/LayoutContext.js";
 import GoogleButton from "../components/GoogleButton.jsx";
-import { DateOfBirth, EyeButton, Field, FormSection } from "./SignupParts.jsx";
+import { DateOfBirth, EyeButton, Field, FormSection, TermsAgreement } from "./SignupParts.jsx";
 
 function TSignup() {
   const {
@@ -15,6 +15,7 @@ function TSignup() {
     houseAddress, setHouseAddress,
     meterSerialNumber, setMeterSerialNumber,
     meterType, setMeterType,
+    acceptTerms, setAcceptTerms,
     message,
     success,
     loading,
@@ -117,6 +118,8 @@ function TSignup() {
             </FormSection>
 
             <div className="rule" />
+
+            <TermsAgreement checked={acceptTerms} onChange={setAcceptTerms} />
 
             <div className="actions">
               <button type="submit" className="btn" disabled={loading}>

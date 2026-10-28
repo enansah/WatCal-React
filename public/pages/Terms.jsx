@@ -1,7 +1,9 @@
 import React from "react";
+import legal from "../../legal.json";
 import LegalPage, { CONTACT_EMAIL, CONTACT_PHONE } from "./LegalPage.jsx";
 
-const LAST_UPDATED = "26 October 2026";
+// The date lives in legal.json, so sign-up records which version people agreed to
+const LAST_UPDATED = legal.termsUpdated;
 
 // Each section: [id, title, content]. Content is a list of paragraphs; an array inside it is a bullet list.
 // Keep these statements in step with what the app actually does.
