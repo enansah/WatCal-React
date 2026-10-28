@@ -4,6 +4,7 @@ import "../css/Layout.css";            // shared base styles + electric backgrou
 import "../Landlord/css/Layout.css";   // sidebar, header and footer for logged-in pages
 import { AccountContext } from "./AccountContext.js";
 import useIdleLogout from "../Landlord/Logic/useIdleLogout.js";
+import Popup from "./Popup.jsx";
 
 export const DEFAULT_AVATAR = "/Landlord/images/avatar.png";
 
@@ -28,6 +29,8 @@ export default function AccountLayout({ config, children }) {
   const [status, setStatus] = useState("loading"); // loading | ok | error
   const [drawer, setDrawer] = useState(false);     // side menu on small screens
   const [notice, setNotice] = useState("");
+  const [confirmLogout, setConfirmLogout] = useState(false);
+  const [loggingOut, setLoggingOut] = useState(false);
 
   // Check the session once; send visitors who are not logged in to the matching login page
   const checkAuth = useCallback(async () => {
@@ -78,14 +81,25 @@ export default function AccountLayout({ config, children }) {
     navigate(path);
   };
 
+  // Logout asks first: the sidebar button and Settings open the prompt, "Log out" in it does the work
+  const askLogout = () => {
+    setDrawer(false);
+    setNotice("");
+    setConfirmLogout(true);
+  };
+
   const logout = async () => {
+    setLoggingOut(true);
     try {
       const response = await fetch(logoutPath, { method: "POST" });
       if (!response.ok) throw new Error("Logout failed");
+      setConfirmLogout(false);
       navigate("/");
     } catch (error) {
       console.error("Error logging out:", error);
       setNotice("Logout failed. Please try again.");
+    } finally {
+      setLoggingOut(false);
     }
   };
 
@@ -132,7 +146,7 @@ export default function AccountLayout({ config, children }) {
 
   return (
     <AccountContext.Provider
-      value={{ account, role, [role]: account, logout, updateAccount, updateLandlord: updateAccount }}
+      value={{ account, role, [role]: account, logout: askLogout, updateAccount, updateLandlord: updateAccount }}
     >
       <div className="llayout">
         {electric}
@@ -172,11 +186,10 @@ export default function AccountLayout({ config, children }) {
               </span>
             </ProfileTag>
 
-            <button className="nitem logout" onClick={logout}>
+            <button className="nitem logout" onClick={askLogout}>
               <img alt="" src="/Landlord/images/sign-out-alt.svg" />
               <span>Logout</span>
             </button>
-            {notice && <p className="lnotice" role="alert">{notice}</p>}
 
             <div className="dlegal">
               <span onClick={() => go("/Privacy")}>Privacy Policy</span>
@@ -216,6 +229,19 @@ export default function AccountLayout({ config, children }) {
           </footer>
         </div>
       </div>
+
+      {/* LOGOUT PROMPT */}
+      {confirmLogout && (
+        <Popup label="Log out" role="alertdialog" onClose={() => setConfirmLogout(false)} dismissible={!loggingOut} showClose={false}>
+          <h3>Log out of WatCal?</h3>
+          <p>You'll need to log in again to see your account.</p>
+          {notice && <p className="lnotice" role="alert">{notice}</p>}
+          <div className="popup-choices">
+            <button className="cancel" onClick={() => setConfirmLogout(false)} disabled={loggingOut}>Cancel</button>
+            <button className="confirm" onClick={logout} disabled={loggingOut}>{loggingOut ? "Logging out..." : "Log out"}</button>
+          </div>
+        </Popup>
+      )}
     </AccountContext.Provider>
   );
 }
