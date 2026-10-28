@@ -4,7 +4,7 @@ const tariff = require('../../utils/tariff');
 const Landlord = require('../models/Landlord');
 const landlordRoomsFilter = require('../../utils/landlordRooms');
 const { buildInsights } = require('../../utils/usageInsights');
-const { meterInUse, importPastReadings } = require('../../utils/meters');
+const { METER_FORMAT, meterInUse, importPastReadings } = require('../../utils/meters');
 
 exports.getRooms = async (req, res) => {
   try {
@@ -70,7 +70,7 @@ exports.getInsights = async (req, res) => {
 exports.setRoomMeter = async (req, res) => {
   const { roomId } = req.body;
   const meterId = String(req.body.meterId ?? '').trim();
-  if (meterId.length > 40 || (meterId && !/^[A-Za-z0-9 -]+$/.test(meterId))) {
+  if (meterId && !METER_FORMAT.test(meterId)) {
     return res.status(400).json({ msg: 'A meter number can only contain letters, digits, spaces and dashes (up to 40).' });
   }
 

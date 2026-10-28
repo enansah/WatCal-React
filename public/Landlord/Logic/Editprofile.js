@@ -10,7 +10,10 @@ const MAX_PHOTO_BYTES = 10 * 1024 * 1024; // before resizing
 const PHOTO_SIZE = 256;
 
 let roomKey = 0;
-const newRoom = () => ({ key: ++roomKey, room: "", email: "" });
+const newRoom = () => ({ key: ++roomKey, room: "", email: "", meter: "" });
+const METER = /^[A-Za-z0-9 -]{1,40}$/; // same rule as the server (utils/meters.js)
+// Meter numbers match ignoring spaces, letter case and leading zeros, as on the server
+const meterKey = (m) => String(m || "").replace(/\s+/g, "").toUpperCase().replace(/^0+(?=.)/, "");
 
 // Crop the picked photo to a centred square and shrink it to 256px, returned as a JPEG data URL
 function resizePhoto(file) {
@@ -116,11 +119,17 @@ export default function useAccountEditProfile(config = LANDLORD_PROFILE) {
     if (!form.dateOfBirth) next.dateOfBirth = "Enter your date of birth.";
 
     const names = new Set(rooms.map((r) => r.roomNumber.toLowerCase()));
+    // Meters already used by your rooms (the server also checks other landlords and private users)
+    const meters = new Map(rooms.filter((r) => r.meterId).map((r) => [meterKey(r.meterId), r.roomNumber]));
     for (const r of newRooms) {
       const name = r.room.trim();
+      const meter = r.meter.trim();
       if (!name || !EMAIL.test(r.email.trim())) next[`room-${r.key}`] = "Enter a room name and a valid tenant email.";
       else if (names.has(name.toLowerCase())) next[`room-${r.key}`] = `You already have a room called "${name}".`;
+      else if (meter && !METER.test(meter)) next[`room-${r.key}`] = "A meter number can only contain letters, digits, spaces and dashes.";
+      else if (meter && meters.has(meterKey(meter))) next[`room-${r.key}`] = `${meters.get(meterKey(meter))} already uses this meter number.`;
       names.add(name.toLowerCase());
+      if (meter) meters.set(meterKey(meter), name || "Another new room");
     }
     setErrors(next);
     return Object.keys(next).length === 0;
@@ -139,7 +148,7 @@ export default function useAccountEditProfile(config = LANDLORD_PROFILE) {
       const response = await fetch(updateUrl, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(roomsUrl ? { ...body, roomsData: newRooms.map((r) => ({ room: r.room.trim(), email: r.email.trim() })) } : body),
+        body: JSON.stringify(roomsUrl ? { ...body, roomsData: newRooms.map((r) => ({ room: r.room.trim(), email: r.email.trim(), meter: r.meter.trim() })) } : body),
       });
       const data = await response.json().catch(() => ({}));
       if (!response.ok) throw new Error(data.msg || "Could not save your changes.");

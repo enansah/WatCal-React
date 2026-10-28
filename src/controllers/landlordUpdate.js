@@ -16,6 +16,7 @@ function generateUniqueId(length = 8) {
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const { avatarError } = require('../../utils/avatar');
 const sessionAccount = require('../../utils/sessionAccount');
+const { newRoomMetersProblem, importPastReadings } = require('../../utils/meters');
 
 // Keep the logged-in session in step with the saved profile (the header reads it)
 const refreshSession = (req, landlord) => {
@@ -39,9 +40,14 @@ exports.updateUserProfile = async (req, res) => {
     if (email !== undefined && !EMAIL.test(String(email).trim())) {
         return res.status(400).json({ msg: 'Please enter a valid email address' });
     }
-    const rooms = roomsData.map(r => ({ room: String(r.room || '').trim(), email: String(r.email || '').trim() }));
+    const rooms = roomsData.map(r => ({ room: String(r.room || '').trim(), email: String(r.email || '').trim(), meter: String(r.meter ?? '').trim() }));
     if (rooms.some(r => !r.room || !EMAIL.test(r.email))) {
         return res.status(400).json({ msg: 'Each new room needs a name and a valid tenant email' });
+    }
+    // Each new room's meter number is optional; any that are given must be usable
+    const meterProblem = await newRoomMetersProblem(rooms.map(r => ({ name: r.room, meter: r.meter })));
+    if (meterProblem) {
+        return res.status(400).json({ msg: meterProblem });
     }
 
     let roomIds = [];
@@ -77,6 +83,7 @@ exports.updateUserProfile = async (req, res) => {
             landlord: landlord._id,
             roomNumber: room.room,
             roomEmail: room.email,
+            meterId: room.meter || undefined,
             uniqueRoomId: generateUniqueId()  // Add uniqueRoomId here
         }));
         roomIds = roomsToInsert.map(room => room._id);
@@ -88,6 +95,11 @@ exports.updateUserProfile = async (req, res) => {
         landlord.roomIds = landlord.roomIds.concat(roomIds);
         await landlord.save();
         refreshSession(req, landlord);
+
+        // Readings the new rooms' meters sent before the rooms existed
+        for (const room of roomsToInsert) {
+            if (room.meterId) await importPastReadings(Room, room._id, room.meterId);
+        }
 
         res.status(201).json({ msg: 'Landlord profile updated successfully', addedRooms: roomIds.length });
         console.log("Landlord profile updated successfully");

@@ -3,13 +3,8 @@ import "../css/Signup-index.css";
 import useLSignupLogic from "./Logic/LSignupLogic";
 import { useLayout } from "./Logic/LayoutContext.js";
 import GoogleButton from "../components/GoogleButton.jsx";
+import { DateOfBirth, EyeButton, Field, FormSection } from "./SignupParts.jsx";
 
-const Field = ({ label, children }) => (
-  <label className="field">
-    <b>{label}</b>
-    <div className="control">{children}</div>
-  </label>
-);
 
 export default function LSignup() {
   const {
@@ -55,104 +50,135 @@ export default function LSignup() {
               </p>
             )}
 
-            <div className="fields">
-              <Field label="Username">
-                <input name="username" placeholder="Melissa Peters" value={formData.username} onChange={handleChange} />
+            {/* USER DETAILS */}
+            <FormSection id="details-title" title="User details" text="Used to log in and to contact you about your account.">
+              <Field label="Username" hint="You'll use this to log in.">
+                <input name="username" autoComplete="username" placeholder="e.g. Melissa Peters" value={formData.username} onChange={handleChange} />
               </Field>
-
-              <Field label="Email">
-                <input name="email" type="email" placeholder="melpeters@gmail.com" value={formData.email} onChange={handleChange} readOnly={!!google} />
-              </Field>
-
-              {!google && (<>
-              <Field label="Enter password">
+              <Field label="Email" hint={google ? "From your Google account." : "We'll send password resets here."}>
                 <input
-                  name="password"
-                  type={showPassword ? "text" : "password"}
-                  placeholder="*********"
-                  value={formData.password}
+                  name="email"
+                  type="email"
+                  autoComplete="email"
+                  placeholder="you@example.com"
+                  value={formData.email}
                   onChange={handleChange}
-                />
-                <img
-                  className="eye"
-                  alt={showPassword ? "Hide password" : "Show password"}
-                  src={showPassword ? "/images/closed-eyel.png" : "/images/eye.svg"}
-                  onClick={toggleShowPassword}
+                  readOnly={!!google}
                 />
               </Field>
-
-              <Field label="Confirm password">
-                <input
-                  name="confirmPassword"
-                  type={showConfirm ? "text" : "password"}
-                  placeholder="*********"
-                  value={formData.confirmPassword}
-                  onChange={handleChange}
-                />
-                <img
-                  className="eye"
-                  alt={showConfirm ? "Hide password" : "Show password"}
-                  src={showConfirm ? "/images/closed-eyel.png" : "/images/eye.svg"}
-                  onClick={toggleShowConfirm}
-                />
+              <DateOfBirth
+                value={formData.dateOfBirth}
+                onChange={(value) => handleChange({ target: { name: "dateOfBirth", value } })}
+              />
+              <Field label="House address" optional>
+                <input name="houseAddress" autoComplete="street-address" placeholder="e.g. 12 Oxford St, Accra" value={formData.houseAddress} onChange={handleChange} />
               </Field>
-              </>)}
+            </FormSection>
 
-              <Field label="Date of Birth">
-                <input name="dateOfBirth" type="date" value={formData.dateOfBirth} onChange={handleChange} />
+            {/* PASSWORD (not needed when signing up with Google) */}
+            {!google && (
+              <FormSection id="password-title" title="Password" text="Choose a password you don't use on other websites.">
+                <Field label="Password">
+                  <input
+                    name="password"
+                    type={showPassword ? "text" : "password"}
+                    autoComplete="new-password"
+                    placeholder="Create a password"
+                    value={formData.password}
+                    onChange={handleChange}
+                  />
+                  <EyeButton shown={showPassword} onClick={toggleShowPassword} />
+                </Field>
+                <Field label="Confirm password">
+                  <input
+                    name="confirmPassword"
+                    type={showConfirm ? "text" : "password"}
+                    autoComplete="new-password"
+                    placeholder="Type it again"
+                    value={formData.confirmPassword}
+                    onChange={handleChange}
+                  />
+                  <EyeButton shown={showConfirm} onClick={toggleShowConfirm} />
+                </Field>
+              </FormSection>
+            )}
+
+            {/* BUILDING METER */}
+            <FormSection
+              id="meter-title"
+              title="Building meter"
+              text="The main meter for the whole building. Each room's own meter number goes in Rooms below."
+            >
+              <Field label="Meter serial number" optional>
+                <input name="meterSerialNumber" placeholder="e.g. 131xxxxxxx" value={formData.meterSerialNumber} onChange={handleChange} />
               </Field>
-
-              <Field label="Meter serial number">
-                <input name="meterSerialNumber" placeholder="131xxxxxxx" value={formData.meterSerialNumber} onChange={handleChange} />
-              </Field>
-
-              <Field label="House address">
-                <input name="houseAddress" placeholder="(Optional)" value={formData.houseAddress} onChange={handleChange} />
-              </Field>
-
-              <Field label="Meter type">
+              <Field label="Meter type" optional>
                 <select name="meterType" value={formData.meterType} onChange={handleChange}>
-                  <option value="">Select meter-type</option>
+                  <option value="">Choose prepaid or postpaid</option>
                   <option value="prepaid">Prepaid</option>
                   <option value="postpaid">Postpaid</option>
                 </select>
               </Field>
-            </div>
+            </FormSection>
 
             {/* ROOMS */}
-            <div className="rooms">
-              <div className="rooms-head">
-                <h2>Rooms</h2>
-                <p>Add at least two rooms, with the email of the tenant in each.</p>
-              </div>
-
-              {rooms.map((room, i) => (
-                <div key={i} className="room-row">
-                  <Field label={`Room ${i + 1}`}>
-                    <input
-                      placeholder="e.g. Room A"
-                      value={room.room}
-                      onChange={(e) => handleRoomChange(i, "room", e.target.value)}
-                    />
-                  </Field>
-                  <Field label="Email">
-                    <input
-                      type="email"
-                      placeholder="tenant@example.com"
-                      value={room.email}
-                      onChange={(e) => handleRoomChange(i, "email", e.target.value)}
-                    />
-                  </Field>
-                  {i >= 2 ? (
-                    <button type="button" className="remove" aria-label={`Remove room ${i + 1}`} onClick={() => removeRoom(i)}>✕</button>
-                  ) : (
-                    <span className="remove-spacer" />
-                  )}
+            <section className="rooms" aria-labelledby="rooms-title">
+              <header className="rooms-head">
+                <div>
+                  <h2 id="rooms-title">Rooms</h2>
+                  <p>
+                    Add each room you rent out and the email of the tenant living in it. You need at least two rooms.
+                    If you know each room's meter number, add it so readings start arriving straight away; you can also add it later on the Analysis page.
+                  </p>
                 </div>
-              ))}
+                <span className="rooms-count">{rooms.length} room{rooms.length === 1 ? "" : "s"}</span>
+              </header>
 
-              <button type="button" className="add-room" onClick={addRoom}>+ Add room</button>
-            </div>
+              <ol className="room-list">
+                {rooms.map((room, i) => (
+                  <li key={i} className="room-card">
+                    <div className="room-card-head">
+                      <span className="room-number">Room {i + 1}</span>
+                      {/* The first two rooms are required, so only extra rooms can be removed */}
+                      {i >= 2 && (
+                        <button type="button" className="remove" aria-label={`Remove room ${i + 1}`} onClick={() => removeRoom(i)}>
+                          Remove
+                        </button>
+                      )}
+                    </div>
+                    <div className="room-fields">
+                      <Field label="Room name">
+                        <input
+                          placeholder={`e.g. Room ${String.fromCharCode(65 + (i % 26))}`}
+                          value={room.room}
+                          onChange={(e) => handleRoomChange(i, "room", e.target.value)}
+                        />
+                      </Field>
+                      <Field label="Tenant email">
+                        <input
+                          type="email"
+                          placeholder="tenant@example.com"
+                          value={room.email}
+                          onChange={(e) => handleRoomChange(i, "email", e.target.value)}
+                        />
+                      </Field>
+                      <Field label="Meter number (optional)">
+                        <input
+                          placeholder="e.g. 12345678"
+                          maxLength={40}
+                          value={room.meter}
+                          onChange={(e) => handleRoomChange(i, "meter", e.target.value)}
+                        />
+                      </Field>
+                    </div>
+                  </li>
+                ))}
+              </ol>
+
+              <button type="button" className="add-room" onClick={addRoom}>
+                <span aria-hidden="true">+</span> Add another room
+              </button>
+            </section>
 
             <div className="rule" />
 

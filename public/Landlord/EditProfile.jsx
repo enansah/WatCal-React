@@ -141,6 +141,9 @@ export default function AccountEditProfile({ config = LANDLORD_PROFILE }) {
                       <Field id={`room-email-${r.key}`} label="Tenant email">
                         <input id={`room-email-${r.key}`} type="email" value={r.email} onChange={setRoom(r.key, "email")} placeholder="tenant@example.com" />
                       </Field>
+                      <Field id={`room-meter-${r.key}`} label="Meter number (optional)">
+                        <input id={`room-meter-${r.key}`} value={r.meter} onChange={setRoom(r.key, "meter")} placeholder="e.g. 12345678" maxLength={40} />
+                      </Field>
                     </div>
                     <button type="button" className="remove-room" onClick={() => removeRoom(r.key)} aria-label={`Remove new room ${i + 1}`}>✕</button>
                     {errors[`room-${r.key}`] && <p className="field-error">{errors[`room-${r.key}`]}</p>}

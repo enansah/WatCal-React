@@ -3,13 +3,7 @@ import "../css/Signup-index.css";
 import { useTSignupLogic } from "./Logic/TSignupLogic";
 import { useLayout } from "./Logic/LayoutContext.js";
 import GoogleButton from "../components/GoogleButton.jsx";
-
-const Field = ({ label, children }) => (
-  <label className="field">
-    <b>{label}</b>
-    <div className="control">{children}</div>
-  </label>
-);
+import { DateOfBirth, EyeButton, Field, FormSection } from "./SignupParts.jsx";
 
 function TSignup() {
   const {
@@ -57,68 +51,70 @@ function TSignup() {
               </p>
             )}
 
-            <div className="fields">
-              <Field label="Username">
-                <input placeholder="Melissa Peters" value={username} onChange={(e) => setUsername(e.target.value)} />
+            {/* USER DETAILS */}
+            <FormSection id="details-title" title="User details" text="Used to log in and to contact you about your account.">
+              <Field label="Username" hint="You'll use this to log in.">
+                <input autoComplete="username" placeholder="e.g. Melissa Peters" value={username} onChange={(e) => setUsername(e.target.value)} />
               </Field>
-
-              <Field label="Email">
-                <input type="email" placeholder="melpeters@gmail.com" value={email} onChange={(e) => setEmail(e.target.value)} readOnly={!!google} />
-              </Field>
-
-              {!google && (<>
-              <Field label="Enter password">
+              <Field label="Email" hint={google ? "From your Google account." : "We'll send password resets and receipts here."}>
                 <input
-                  type={showPassword ? "text" : "password"}
-                  placeholder="*********"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-                <img
-                  className="eye"
-                  alt={showPassword ? "Hide password" : "Show password"}
-                  src={showPassword ? "/images/closed-eyel.png" : "/images/eye.svg"}
-                  onClick={togglePassword}
+                  type="email"
+                  autoComplete="email"
+                  placeholder="you@example.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  readOnly={!!google}
                 />
               </Field>
-
-              <Field label="Confirm password">
-                <input
-                  type={showConfirmPassword ? "text" : "password"}
-                  placeholder="*********"
-                  value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                />
-                <img
-                  className="eye"
-                  alt={showConfirmPassword ? "Hide password" : "Show password"}
-                  src={showConfirmPassword ? "/images/closed-eyel.png" : "/images/eye.svg"}
-                  onClick={toggleConfirmPassword}
-                />
+              <DateOfBirth value={dateOfBirth} onChange={setDateOfBirth} />
+              <Field label="House address" optional>
+                <input autoComplete="street-address" placeholder="e.g. 12 Oxford St, Accra" value={houseAddress} onChange={(e) => setHouseAddress(e.target.value)} />
               </Field>
-              </>)}
+            </FormSection>
 
-              <Field label="Date of Birth">
-                <input type="date" value={dateOfBirth} onChange={(e) => setDateOfBirth(e.target.value)} />
+            {/* PASSWORD (not needed when signing up with Google) */}
+            {!google && (
+              <FormSection id="password-title" title="Password" text="Choose a password you don't use on other websites.">
+                <Field label="Password">
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    autoComplete="new-password"
+                    placeholder="Create a password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                  <EyeButton shown={showPassword} onClick={togglePassword} />
+                </Field>
+                <Field label="Confirm password">
+                  <input
+                    type={showConfirmPassword ? "text" : "password"}
+                    autoComplete="new-password"
+                    placeholder="Type it again"
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                  />
+                  <EyeButton shown={showConfirmPassword} onClick={toggleConfirmPassword} />
+                </Field>
+              </FormSection>
+            )}
+
+            {/* YOUR METER */}
+            <FormSection
+              id="meter-title"
+              title="Your meter"
+              text="Your readings are matched to this meter number, so add it if you can. You can also add it later in Edit profile."
+            >
+              <Field label="Meter serial number" optional hint="The number shown on your meter, e.g. in its display or on its label.">
+                <input placeholder="e.g. 131xxxxxxx" maxLength={40} value={meterSerialNumber} onChange={(e) => setMeterSerialNumber(e.target.value)} />
               </Field>
-
-              <Field label="Meter serial number">
-                <input placeholder="131xxxxxxx" value={meterSerialNumber} onChange={(e) => setMeterSerialNumber(e.target.value)} />
-              </Field>
-
-              <Field label="House address">
-                <input placeholder="(Optional)" value={houseAddress} onChange={(e) => setHouseAddress(e.target.value)} />
-                <img className="hint" alt="" title="This field is optional" src="/images/question.svg" />
-              </Field>
-
-              <Field label="Meter type">
+              <Field label="Meter type" optional>
                 <select value={meterType} onChange={(e) => setMeterType(e.target.value)}>
-                  <option value="">Select meter-type</option>
+                  <option value="">Choose prepaid or postpaid</option>
                   <option value="prepaid">Prepaid</option>
                   <option value="postpaid">Postpaid</option>
                 </select>
               </Field>
-            </div>
+            </FormSection>
 
             <div className="rule" />
 

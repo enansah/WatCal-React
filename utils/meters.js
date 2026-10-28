@@ -67,6 +67,32 @@ async function meterInUse(id, except = {}) {
   return null;
 }
 
+// What a meter number typed by a person may contain
+const METER_FORMAT = /^[A-Za-z0-9 -]{1,40}$/;
+
+/**
+ * Checks the optional meter numbers of rooms about to be created: rooms = [{ name, meter }].
+ * Resolves to a message for the person, or null when every given meter number can be used.
+ */
+async function newRoomMetersProblem(rooms) {
+  const given = rooms
+    .map((r) => ({ name: String(r.name || '').trim(), meter: String(r.meter ?? '').trim() }))
+    .filter((r) => r.meter);
+  for (const r of given) {
+    if (!METER_FORMAT.test(r.meter)) return `${r.name}: a meter number can only contain letters, digits, spaces and dashes (up to 40).`;
+  }
+  const seen = new Map();
+  for (const r of given) {
+    const key = normalizeMeterId(r.meter);
+    if (seen.has(key)) return `${seen.get(key)} and ${r.name} have the same meter number. Each room needs its own meter.`;
+    seen.set(key, r.name);
+  }
+  for (const r of given) {
+    if (await meterInUse(r.meter)) return `${r.name}: this meter number is already linked to another room or account.`;
+  }
+  return null;
+}
+
 // Add readings to one room or account, skipping times it already has, keeping them in time order
 async function addReadings(Model, doc, readings) {
   const have = new Set((doc.readings || []).map((r) => new Date(r.timestamp).getTime()));
@@ -120,4 +146,6 @@ async function importPastReadings(Model, id, meterId) {
   return doc ? addReadings(Model, doc, readings) : 0;
 }
 
-module.exports = { normalizeMeterId, energyKwh, kwhFactor, meterInUse, recordReading, importPastReadings };
+module.exports = {
+  METER_FORMAT, normalizeMeterId, energyKwh, kwhFactor, meterInUse, newRoomMetersProblem, recordReading, importPastReadings,
+};

@@ -3,6 +3,10 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { DASHBOARDS } from "../../components/GoogleButton.jsx";
 
 const EMAIL = /^\S+@\S+\.\S+$/;
+const METER = /^[A-Za-z0-9 -]{1,40}$/; // same rule as the server (utils/meters.js)
+// Meter numbers match ignoring spaces, letter case and leading zeros, as on the server
+const meterKey = (m) => m.replace(/\s+/g, "").toUpperCase().replace(/^0+(?=.)/, "");
+const newRoom = () => ({ room: "", email: "", meter: "" });
 
 export default function useLSignupLogic() {
   const navigate = useNavigate();
@@ -12,10 +16,7 @@ export default function useLSignupLogic() {
   const [message, setMessage] = useState("");
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [rooms, setRooms] = useState([
-    { room: "", email: "" },
-    { room: "", email: "" },
-  ]);
+  const [rooms, setRooms] = useState([newRoom(), newRoom()]);
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -32,7 +33,7 @@ export default function useLSignupLogic() {
   // Inputs use their `name` attribute as the key
   const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
 
-  const addRoom = () => setRooms([...rooms, { room: "", email: "" }]);
+  const addRoom = () => setRooms([...rooms, newRoom()]);
   const removeRoom = (index) => setRooms(rooms.filter((_, i) => i !== index));
   const handleRoomChange = (index, field, value) =>
     setRooms(rooms.map((r, i) => (i === index ? { ...r, [field]: value } : r)));
@@ -68,8 +69,18 @@ export default function useLSignupLogic() {
 
     const filledRooms = rooms.filter((r) => r.room.trim());
     if (filledRooms.length < 2) return fail("You must add at least two rooms.");
-    if (filledRooms.some((r) => r.email.trim() && !EMAIL.test(r.email.trim()))) {
-      return fail("One of the room emails is not valid.");
+    const noEmail = filledRooms.find((r) => !EMAIL.test(r.email.trim()));
+    if (noEmail) return fail(`Enter a valid tenant email for ${noEmail.room.trim()}.`);
+
+    // Meter numbers are optional; any that are given must be valid and different
+    const withMeter = filledRooms.filter((r) => r.meter.trim());
+    const badMeter = withMeter.find((r) => !METER.test(r.meter.trim()));
+    if (badMeter) return fail(`${badMeter.room.trim()}: a meter number can only contain letters, digits, spaces and dashes.`);
+    const seen = new Map();
+    for (const r of withMeter) {
+      const key = meterKey(r.meter.trim());
+      if (seen.has(key)) return fail(`${seen.get(key)} and ${r.room.trim()} have the same meter number. Each room needs its own meter.`);
+      seen.set(key, r.room.trim());
     }
 
     setMessage("");
@@ -86,7 +97,7 @@ export default function useLSignupLogic() {
           confirmPassword: undefined,
           username: username.trim(),
           email: email.trim(),
-          roomsData: filledRooms.map((r) => ({ room: r.room.trim(), email: r.email.trim() })),
+          roomsData: filledRooms.map((r) => ({ room: r.room.trim(), email: r.email.trim(), meter: r.meter.trim() })),
         }),
       });
       const data = await res.json().catch(() => ({}));

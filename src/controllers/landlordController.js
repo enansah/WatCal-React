@@ -7,6 +7,7 @@ const sessionAccount = require('../../utils/sessionAccount');
 const Landlord = require('../models/Landlord');
 const Room = require('../models/Room');
 const { pendingGoogleId, clearGoogleSignup } = require('./googleAuth');
+const { newRoomMetersProblem, importPastReadings } = require('../../utils/meters');
 
 // Function to generate a random 8-character string
 function generateRandomString() {
@@ -51,6 +52,15 @@ exports.registerLandlord = async (req, res) => {
       return res.status(400).json({ msg: 'Please enter a password' });
     }
 
+    if (!Array.isArray(roomsData)) {
+      return res.status(400).json({ msg: 'Rooms must be a list' });
+    }
+    // Each room's meter number is optional; any that are given must be usable
+    const meterProblem = await newRoomMetersProblem(roomsData.map((r) => ({ name: r.room, meter: r.meter })));
+    if (meterProblem) {
+      return res.status(400).json({ msg: meterProblem });
+    }
+
     // Hash the password
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password || crypto.randomBytes(32).toString('hex'), salt);
@@ -62,6 +72,7 @@ exports.registerLandlord = async (req, res) => {
       landlord: landlordId,
       roomNumber: room.room,
       roomEmail: room.email,
+      meterId: String(room.meter ?? '').trim() || undefined,
       uniqueRoomId: generateRandomString()
     }));
     roomIds = roomsToInsert.map(room => room._id);
@@ -85,6 +96,11 @@ exports.registerLandlord = async (req, res) => {
 
     await Room.insertMany(roomsToInsert);
     await landlord.save();
+
+    // Readings these meters sent before the rooms existed
+    for (const room of roomsToInsert) {
+      if (room.meterId) await importPastReadings(Room, room._id, room.meterId);
+    }
 
     // Google sign-ups are already verified, so log them straight in
     if (googleId) {
